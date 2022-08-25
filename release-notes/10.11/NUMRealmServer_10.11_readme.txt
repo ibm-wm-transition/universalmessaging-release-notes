@@ -1,13 +1,12 @@
-              Universal Messaging RealmServer 10.11 SP0 Fix 4 Readme
-
-                                  March 2022
+                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 7 Readme
+               
+                                  August 2022
 
 ________________________________________________________________________________
 
-This file provides important information for applying Universal Messaging
-RealmServer 10.11 SP0 Fix 4 to Universal Messaging 10.11 SP0 installations. For
-additional information about Universal Messaging, see the index.html file in
-the docs directory of your installation.
+This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
+7 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+Messaging, see the index.html file in the docs directory of your installation. 
 
 
 Contents:
@@ -17,11 +16,11 @@ Contents:
 3.0   Product(s)/Component(s) Affected
 4.0   Requirements
 5.0   Platform Support
-6.0   Cautions and Warnings
+6.0   Cautions and Warnings 
 7.0   Fix Contents
 8.0   Installation
 9.0   Uninstallation
-10.0  Globalization
+10.0  Globalization 
 11.0  Copyright
 12.0  Contacting Us
 
@@ -29,19 +28,19 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging RealmServer 10.11 SP0 Fix 4 Build 701
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 7 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-wMFix.NUMRealmServer_10.11.0.0004-701
+NUM_10.11_wM_RealmServer_Fix7
 
 
 
 3.0 Product(s)/Component(s) Affected
 
-Universal Messaging 10.11 SP0
+Universal Messaging webMethods RealmServer 10.11 SP0
 
 
 
@@ -67,153 +66,220 @@ up to date with latest Universal Messaging official fix set.
 7.0 Fix Contents
 
 In addition to including resolutions to product defects, a fix may also include
-enhancements to existing functionality and features. Any of these items can
-result in new or changed built-in services, APIs, or configuration parameters.
+enhancements to existing functionality and features. Any of these items can 
+result in new or changed built-in services, APIs, or configuration parameters. 
 Review the fix contents carefully before applying the fix.
-
-This fix is cumulative, which means that it is an aggregate of previous fixes
+ 	
+This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
-NUM-17708(NUM_10.11_wM_RealmServer_Fix4)
+NUM-18472 (NUM_10.11_wM_RealmServer_Fix7)
 
-Pre-10.7 synchronous clients are not able to retrieve events from a standard, non-durable queue on a
-slave node in a cluster.
+Migrating shared queue durables fails with an EOFException.
+When you are migrating shared queue durables from a version of Universal Messaging older than 10.5 
+to a newer version, Universal Messaging writes an EOFException in the nirvana.log file.
+The issue is now resolved.
 
-The fix for this issue will ensure that window sizes are handled properly for older, pre-10.7
-synchronous clients, while post-10.7 synchronous clients will use the new prefetch API instead.
+NUM-18425 (NUM_10.11_wM_RealmServer_Fix7)
 
-NUM-15970(NUM_10.11_wM_RealmServer_Fix4)
+Creating a durable on the JMX server fails with a MalformedObjectNameException.
+When you have enabled the JMX server and try to create a durable on a channel, Universal Messaging 
+writes a MalformedObjectNameException in the nirvana.log file. The durable gets created on the 
+Universal Messaging server, but not on the JMX server. The issue occurs because the JMX beans and 
+attributes cannot validate a durable name containing special characters.
+The issue is now resolved.
 
-When nProtobuf events get published from a Universal Messaging server to the client, the events are
-not processed in the correct order. The issue occurs because the custom Protobuf attributes are not
-set in the nProtobuf events.
+NUM-18372 (NUM_10.11_wM_RealmServer_Fix7)
+
+In a Universal Messaging (UM) cluster that uses multiplexed sessions, the primary realm server 
+instance stops responding because of increased CPU usage, which stalls the tasks on the UM server. 
+The issue occurs when the multiplexed SSL session between the server and client does not close 
+properly.
+The issue is resolved.
+javax.net.ssl.SSLException: closing inbound before receiving peer's close_notify
+The fix for this issue involves correcting and refactoring specific code in the server's NIO layer 
+to address the issue.
+
+NUM-18264 (NUM_10.11_wM_RealmServer_Fix7)
+
+When Universal Messaging is configured to use the Logback framework, rolling the logs might fail 
+with an exception.
+When rolling the logs on a Windows operating system, if the Logback framework fails to rename a log 
+file, it throws a NullPointerException.
+The issue is resolved. Universal Messaging now supports version 1.2.11 of the Logback framework.
+
+NUM-18203 (NUM_10.11_wM_RealmServer_Fix6)
+
+A Universal Messaging client might fail to connect to the server with a "backlog exceeded" error.
+The client cannot connect to the server and Universal Messaging writes the following
+error to the nirvana.log: "Backlog queue exceeded limit, unable to process incoming connection".
+In addition, the client might report many slow-moving tasks related to event processing. The issue 
+occurs
+after installing the fix for NUM-17781 for your Universal Messaging version, which introduces a 
+regression.
+The issue is resolved. The restriction on the total number of connections being authenticated now 
+falls back on
+the Connection Monitor to ensure that there are not too many connections being authenticated at the 
+same time.
+This enforces the limit based on the host from which the connections are coming and not based on the 
+total of connections.
+
+NUM-18197 (NUM_10.11_wM_RealmServer_Fix6)
+
+Universal Messaging continuously writes NullPointerExceptions to the nirvana.log file, which 
+originate from the JMX context.
+The issue occurs if you create a secure interface and do not specify correct certificate attributes.
 The issue is resolved.
 
-NUM-17790(NUM_10.11_wM_RealmServer_Fix4)
+NUM-18111 (NUM_10.11_wM_RealmServer_Fix6)
 
-Universal Messaging now supports flat namespaces for topics and queues in the JMX server bean. When
-you enable the new functionality, a JMX queue namespace, for example, will have the format
+The performance of a Universal Messaging server might deteriorate when a durable or a queue has many 
+outstanding events.
+The issue is resolved.
+
+NUM-17996 (NUM_10.11_wM_RealmServer_Fix6)
+
+Clients version 10.3 and older might fail to receive events from a queue
+when they are connected to a slave node in a Universal Messaging cluster.
+The issue occurs when a synchronous queue consumer consumes events from the queue.
+Under these conditions, the slave might return an array of one event to the synchronous
+queue consumer.
+The issue is resolved.
+
+NUM-15197 (NUM_10.11_wM_RealmServer_Fix6)
+
+The Universal Messaging RealmInformationCollector tool fails to run in a Docker container.
+When you try to start the RealmInformationCollector in a Docker container, the tool returns
+the following error: 'Universal Messaging realm server component not present in the current
+installation directory (/opt/softwareag/UniversalMessaging/tools/runner/./../../..). 
+So this operation is not applicable.' 
+This issue is now resolved.
+
+NUM-17790 (NUM_10.11_wM_RealmServer_Fix4)
+
+Universal Messaging now supports flat namespaces for topics and queues in the JMX server bean. When 
+you enable the new functionality, a JMX queue namespace, for example, will have the format 
 "destinationName=/q1/q2/q3".
-
-By default, JMX namespaces for topics and queues are created using a folder tree structure, for
-example, "Folder1=q1,Folder2=q2,destinationName=queuename", which might cause issues for some
+By default, JMX namespaces for topics and queues are created using a folder tree structure, for 
+example, "Folder1=q1,Folder2=q2,destinationName=queuename", which might cause issues for some 
 monitoring solutions.
-
-To enable the flat namespace functionality, you must set to “true” a new realm configuration
-property, “FlatStoreJMXBeanNamespace", as part of the JVM management configuration for a realm.
-To switch to flat namespaces, take the following steps:
+To enable the flat namespace functionality, you must set to ?true? a new realm configuration 
+property, ?FlatStoreJMXBeanNamespace", as part of the JVM management configuration for a realm. To 
+switch to flat namespaces, take the following steps:
 1. In Enterprise Manager, select a realm and go to Config > JVM Management.
-2. Set the "FlatStoreJMXBeanNamespace" property to “true”.
-3. Disable the “EnableJMX” property to stop the JMX server.
-4. Set “EnableJMX” to “true” again.
-
-If you are using Prometheus to monitor Universal Messaging, you must edit the “pattern” parameter for
- all topic and queue attributes in the jmx_sag_um_exporter.yaml file between steps 3 and 4, as follows
+2. Set the "FlatStoreJMXBeanNamespace" property to ?true?.
+3. Disable the ?EnableJMX? property to stop the JMX server.
+4. Set ?EnableJMX? to ?true? again.
+If you are using Prometheus to monitor Universal Messaging, you must edit the ?pattern? parameter 
+for all topic and queue attributes in the jmx_sag_um_exporter.yaml file between steps 3 and 4, as 
+follows:
 Old version of pattern:
-- pattern: com.softwareag.um.server<type=Broker, brokerName=(\S*), destinationType=Queue,
+- pattern: com.softwareag.um.server<type=Broker, brokerName=(\S*), destinationType=Queue, 
 (.*)><>(TotalPublished)
 New version of pattern:
-- pattern: com.softwareag.um.server<type=Broker, brokerName=(\S*), destinationType=Queue,
+- pattern: com.softwareag.um.server<type=Broker, brokerName=(\S*), destinationType=Queue, 
 destinationName=(\S*)><>(TotalPublished)
+You must replace (.*) in the old file version with destinationName=(\S*) in the new file version. A 
+restart of the server is not required because the changes take effect at run time.
 
-You must replace (.*) in the old file version with destinationName=(\S*) in the new file version.
-A restart of the server is not required because the changes take effect at run time.
+NUM-17781 (NUM_10.11_wM_RealmServer_Fix4)
 
-NUM-17781(NUM_10.11_wM_RealmServer_Fix4)
+When connecting many sockets to NHPS and NSPS interfaces in a very short period of time (Load 
+Testing) the Accept Thread Pool of the Interface will face exhaustion and excess CPU usage as we 
+wait for each socket to be authenticated. 
+This issue has been fixed by delaying when we accept new connections to ensure that the Accept 
+Threads are only invoked once a socket has negotiated TLS, the TLS negotiation will be undertaken 
+by selector threads on the interface.
 
-When connecting many sockets to NHPS and NSPS interfaces in a very short period of time (Load Testing)
-the Accept Thread Pool of the Interface will face exhaustion and excess CPU usage as we wait for each
-socket to be authenticated.
+NUM-17708 (NUM_10.11_wM_RealmServer_Fix4)
 
-This issue has been fixed by delaying when we accept new connections to ensure that the Accept Threads
-are only invoked once a socket has negotiated TLS, the TLS negotiation will be undertaken by selector
-threads on the interface.
+Pre-10.7 synchronous clients are not able to retrieve events from a standard, non-durable queue on a 
+slave node in a cluster.
+The fix for this issue will ensure that window sizes are handled properly for older, pre-10.7 
+synchronous clients, while post-10.7 synchronous clients will use the new prefetch API instead.
 
-NUM-17689(NUM_10.11_wM_RealmServer_Fix4)
+NUM-17689 (NUM_10.11_wM_RealmServer_Fix4)
 
-Universal Messaging Enterprise Manager shows a negative value for Current Connections in the Totals
+Universal Messaging Enterprise Manager shows a negative value for Current Connections in the Totals 
 section for a shared or serial durable.
-
 The issue is resolved.
 
-NUM-16649(NUM_10.11_wM_RealmServer_Fix4)
+NUM-17669 (NUM_10.11_wM_RealmServer_Fix4)
 
-During the implementation of Bidirectional Client Support we inadvertently changed logs around
-initial connection and authentication which removed clarity of connection failures.
-
-We have reinstated all log entries related to connection and authentication failures.
-
-There was further work done to remediated interface statistics calculations to be accurate for all
-types of connections (UM Native Protocol, MQTT, AMQP, Javascript and all HTTP connections) which
-allows the Total Connection, Authentication Time and Failed connection statistics to be accurate
-for each interface.
-
-Under certain conditions an exception was logged java.lang.NegativeArraySizeException from a thread
-stack including the class ServerLoginContextNegotiator this defect has been resolved, it was a non
-fatal though the log entry did not indicate this.
-
-NUM-17547(NUM_10.11_wM_RealmServer_Fix4)
-
-EM was showing internal session ID related information as connection key in the durable tab for
-indexed durables. This prevented end users from finding potentially slow or stuck consumers to
-bounce. The fix is to display IP:Port SessionID formatted key instead of internal session ID info so
-that client connections could be identified in EM and bounced.
-
-NUM-17669(NUM_10.11_wM_RealmServer_Fix4)
-
-UM server was not able to handle more then thousand simultaneous MQTT connection gracefully- MQTT
-connect time would increase and MQTT clients might start experiencing connect timeouts.
-This is now resolved by optimizing the MQTT connect handling on the server. Depending on the
-environment used, single UM server should be able to handle more then 5000 MQTT connect operations
+UM server was not able to handle more then thousand simultaneous MQTT connection gracefully- MQTT 
+connect time would increase and MQTT clients might start experiencing connect timeouts. 
+This is now resolved by optimizing the MQTT connect handling on the server. Depending on the 
+environment used, single UM server should be able to handle more then 5000 MQTT connect operations 
 simultaneously.
 Also UM's ability to work with thousands stores and consumers is also improved.
 Following important optimizations were added as part of this fix:
-- Durable state saving was optimized by using an buffered output stream, so the save operation is
+- Durable state saving was optimized by using an buffered output stream, so the save operation is 
 performed faster on disk.
-- MQTT configuration to configure the EventsPerSpinle channel configuration for auto created topics
+- MQTT configuration to configure the EventsPerSpinle channel configuration for auto created topics 
 is added:
-"Protocol MQTT Config"-> "AutoCreatedStoreSpindleSize". Defaults to 50000. Previously stores were
-created with eventsPerSpindle = 0, which was leading to MQTT auto created stores were created as
+"Protocol MQTT Config"-> "AutoCreatedStoreSpindleSize". Defaults to 50000. Previously stores were 
+created with eventsPerSpindle = 0, which was leading to MQTT auto created stores were created as 
 non-multifile stores.
 - Durable config was added to enable\disable the Consumer State Monitor.
-In case of many consumers, the consumer state monitor used for monitor consumer's health might add
+In case of many consumers, the consumer state monitor used for monitor consumer's health might add 
 an additional overhead which can affect the performance of the UM server's Scheduler Pool.
-"DurableConfig"->"EnableConsumerStateMonitor". Default value is true, to disable the consumer monitor
-set the value to false.
+"DurableConfig"->"EnableConsumerStateMonitor". Default value is true, to disable the consumer 
+monitor set the value to false.
 - A ConcurrentModificationException in the nInterestStorageValidator is fixed.
-- For single UM server deployment (non-A/A clustering), the duplicate MQTT ClientID detection is
+- For single UM server deployment (non-A/A clustering), the duplicate MQTT ClientID detection is 
 optimized to not persist connection state on disk.
+
+NUM-17547 (NUM_10.11_wM_RealmServer_Fix4)
+
+EM was showing internal session ID related information as connection key in the durable tab for 
+indexed durables. This prevented end users from finding potentially slow or stuck consumers to 
+bounce. The fix is to display IP:Port SessionID formatted key instead of internal session ID info 
+so that client connections could be identified in EM and bounced. 
+
+NUM-16649 (NUM_10.11_wM_RealmServer_Fix4)
+
+During the implementation of Bidirectional Client Support we inadvertently changed logs around 
+initial connection and authentication which removed clarity of connection failures.
+We have reinstated all log entries related to connection and authentication failures.
+There was further work done to remediated interface statistics calculations to be accurate for all 
+types of connections (UM Native Protocol, MQTT, AMQP, Javascript and all HTTP connections) which 
+allows the Total Connection, Authentication Time and Failed connection statistics to be accurate 
+for each interface.
+Under certain conditions an exception was logged java.lang.NegativeArraySizeException from a thread 
+stack including the class ServerLoginContextNegotiator this defect has been resolved, it was a non 
+fatal though the log entry did not indicate this.
+
+NUM-15970 (NUM_10.11_wM_RealmServer_Fix4)
+
+When nProtobuf events get published from a Universal Messaging server to the client, the events are 
+not processed in the correct order. The issue occurs because the custom Protobuf attributes are not 
+set in the nProtobuf events.
+The issue is resolved.
 
 NUM-17640 (NUM_10.11_wM_RealmServer_Fix3)
 
-When using NSPS protocol (nsp over SSL) for inter-cluster commmunication, Universal Messaging master
-realm may lockup when writing data to another realm in the cluster if the connection to that realm
-is interrupted. The lockup may prevent the cluster keep alive check to reset the connection and may
-cause the master realm to remain stuck even after the rest of the cluster reforms and elects
+When using NSPS protocol (nsp over SSL) for inter-cluster commmunication, Universal Messaging master 
+realm may lockup when writing data to another realm in the cluster if the connection to that realm 
+is interrupted. The lockup may prevent the cluster keep alive check to reset the connection and may 
+cause the master realm to remain stuck even after the rest of the cluster reforms and elects 
 another master.
-This issue is now resolved. Universal Messaging server no longer holds any locks when closing an
-inter-realm connection, which enables cluster keep alive handling to close non-responsive
+This issue is now resolved. Universal Messaging server no longer holds any locks when closing an 
+inter-realm connection, which enables cluster keep alive handling to close non-responsive 
 connections immediately.
 
 NUM-17566 (NUM_10.11_wM_RealmServer_Fix3)
 
 The Universal Messaging server might log NullPointerException error messages when JMX is enabled.
-When you enable JMX on Universal Messaging, the UM JMX server might register sync queue readers
-incorrectly and log multiple NullPointerException error messages in the nirvana.log. This issue
+When you enable JMX on Universal Messaging, the UM JMX server might register sync queue readers 
+incorrectly and log multiple NullPointerException error messages in the nirvana.log. This issue 
 occurs when attempting to read events from a queue with a sync consumer.
-The issue is resolved.
-
-NUM-16295 (NUM_10.11_wM_RealmServer_Fix3)
-
-After restarting server in a cluster sometimes the restarted server can not reconnect the cluster
-imidiately and throws nRealmUnreachableException.
 The issue is resolved.
 
 NUM-17463 (NUM_10.11_wM_RealmServer_Fix2)
 
-The upper limit for stalled task warning time (StalledTaskWarningTime) used to be 1 minute which is
-insufficient for some customers which have long running tasks. The upper limit is now increased to
-5 minutes in line with older releases.
+The upper limit for stalled task warning time (StalledTaskWarningTime) used to be 1 minute which is 
+insufficient for some customers which have long running tasks. The upper limit is now increased to 
+5 minutes in line with older releases. 
 
 NUM-17415 (NUM_10.11_wM_RealmServer_Fix2)
 
@@ -223,33 +289,33 @@ selector that has an event buffer size of more than 10 000 symbols. In this case
 Universal Messaging writes the following error in the nirvana.log file:
 "Server shutdown initiated due to fatal file I/O error occurred: Unable to load the durable
 from, corruption detected...Input exceeded input buffer size."
-The issue is resolved. You can now create durables with selectors that have an input event buffer
+The issue is resolved. You can now create durables with selectors that have an input event buffer 
 size of more than 10 000 symbols.
 
 NUM-17117 (NUM_10.11_wM_RealmServer_Fix2)
 
 When clients use the Universal Messaging channel iterator client API to consume events from
-a channel with a shared durable, pausing a session to the server might cause messages to be
+a channel with a shared durable, pausing a session to the server might cause messages to be 
 perceived as lost.
-The issue occurs because the server does not suspend subscriptions properly when a session is
+The issue occurs because the server does not suspend subscriptions properly when a session is 
 paused.
-In this case, the server might send events to consumers while the consumers are not ready to process
+In this case, the server might send events to consumers while the consumers are not ready to process 
 them.
-Such events are perceived as lost, but will be redelivered once the session is closed and a new one
+Such events are perceived as lost, but will be redelivered once the session is closed and a new one 
 is established.
 This issue is resolved. Now the Universal Messaging server times out all durable subscriptions
 when a session is paused, and clients receive a nRequestTimedOutException.
 
 NUM-17062 (NUM_10.11_wM_RealmServer_Fix2)
 
-During the cluster destruction process, there could be a communication task executing, that updates
-a server's known state of remote nodes. There was a possibility that those two processes could
-interfere with each other, resulting in a NullPointerException logged in the server log file. This
+During the cluster destruction process, there could be a communication task executing, that updates 
+a server's known state of remote nodes. There was a possibility that those two processes could 
+interfere with each other, resulting in a NullPointerException logged in the server log file. This 
 issue is now resolved.
 
 NUM-17257 (NUM_10.11_wM_RealmServer_Fix1)
 
-Creating a new session to Universal Messaging might fail when working with temporary stores that
+Creating a new session to Universal Messaging might fail when working with temporary stores that 
 have the autoDelete flag enabled.
 Session creation fails with the message "com.pcbsys.nirvana.client.nUnexpectedResponseException:
 Received an unexpected response to the request: Unexpected response to handshake request,
@@ -258,45 +324,45 @@ The issue is resolved.
 
 NUM-17150 (NUM_10.11_wM_RealmServer_Fix1)
 
-After migrating to Universal Messaging version 10.1 or above, a secondary node goes down because the
+After migrating to Universal Messaging version 10.1 or above, a secondary node goes down because the 
 connection used for a multiplex session stalls.
 The issue is resolved.
 
 NUM-17094 (NUM_10.11_wM_RealmServer_Fix1)
 
-A security vulnerability related to the Prometheus JMX functionality was discovered in Universal
+A security vulnerability related to the Prometheus JMX functionality was discovered in Universal 
 Messaging Docker images.
-The issue is resolved. The jmx_prometheus_javaagent binary has been upgraded from version 0.13.0 to
+The issue is resolved. The jmx_prometheus_javaagent binary has been upgraded from version 0.13.0 to 
 version 0.16.1.
 
 NUM-16830 (NUM_10.11_wM_RealmServer_Fix1)
 
-The Universal Messaging realm server has memory and performance issues when a memory leak occurs in
+The Universal Messaging realm server has memory and performance issues when a memory leak occurs in 
 the task scheduler.
-The issue is resolved.
+The issue is resolved. 
 
 NUM-16785 (NUM_10.11_wM_RealmServer_Fix1)
 
-Having a username that contains "@" results in Universal Messaging logging the exception message
+Having a username that contains "@" results in Universal Messaging logging the exception message 
 "Unexpected subject/address format.?, which might flood the nirvana.log and client.log file.
 The issue is now resolved.
 
 NUM-16650 (NUM_10.11_wM_RealmServer_Fix1)
 
 Universal Messaging servers might crash because of memory issues related to the JMX connections.
-After a client unsubscribes from a durable or queue on a realm server, the Universal Messaging
+After a client unsubscribes from a durable or queue on a realm server, the Universal Messaging 
 server might exhaust the available memory and crash.
-The issue occurs because Universal Messaging does not properly remove the JMX connections associated
+The issue occurs because Universal Messaging does not properly remove the JMX connections associated 
 with the subscription.
 The issue is now resolved.
-While fixing this particular issue the overall JMX design was improved an optimized, so other issues
+While fixing this particular issue the overall JMX design was improved an optimized, so other issues 
 were fixed as well.
-This fix is considered an important one for the JMX functionality, so it is strongly recommended for
+This fix is considered an important one for the JMX functionality, so it is strongly recommended for 
 customers which use JMX to install it.
 
 NUM-16534 (NUM_10.11_wM_RealmServer_Fix1)
 
-In a Universal Messaging cluster, the JVM crashes with a memory corruption error caused by
+In a Universal Messaging cluster, the JVM crashes with a memory corruption error caused by 
 synchronization issues.
 The issue is resolved.
 
@@ -310,10 +376,19 @@ Improved server start-up when a large number of stores are loaded.
 
 NUM-10065 (NUM_10.11_wM_RealmServer_Fix1)
 
-When non-durable JMS sync consumer on channel was re-subscribed and there are no new events
+When non-durable JMS sync consumer on channel was re-subscribed and there are no new events 
 published- it was possible the UM server to not delete the old events kept by the old subscriber.
-This is now fixed- when the new consumer is added it will properly reset its interest and the old
+This is now fixed- when the new consumer is added it will properly reset its interest and the old 
 events for which we don't have interest anymore will be deleted.
+
+NUM-17251 (NUM_10.11_wM_RealmServer_Fix1)
+
+
+NUM-16857 (NUM_10.11_wM_RealmServer_Fix1)
+
+Running the Software AG command-line tools in the <SoftwareAG_directory>\common\bin directory
+in a Docker container fails due to an incorrect directory path in the scripts.
+The issue is resolved.
 
 
 8.0 Installation
@@ -335,8 +410,8 @@ see the corresponding documentation at http://documentation.softwareag.com.
 (*) Universal Messaging cluster is supporting rolling updates for its nodes.
 There is a strong recommendation to start applying the new fixes on the Slave nodes and leave the
 Master node to be the last one.
-(*) Starting with 10.11 Fix 3, Universal Messaging provides updated versions of security libraries with
-the Universal Messaging realm server fixes, if any of these libraries has been updated. You can find
+(*) Starting with 10.11 Fix 3, Universal Messaging provides updated versions of security libraries with 
+the Universal Messaging realm server fixes, if any of these libraries has been updated. You can find 
 the libraries in the UniversalMessaging\lib folder.
 
 For each single node that is part of the cluster the customer needs to follow the steps:
@@ -364,65 +439,65 @@ If you are uninstalling a Universal Messaging server fix,
 please note that any running Universal Messaging server
 instances will be automatically shutdown before installing.
 
-If you are uninstalling a Universal Messaging client fix,
-please shut down any applications such as Integration Server
+If you are uninstalling a Universal Messaging client fix, 
+please shut down any applications such as Integration Server 
 or Enterprise Manager which are using client libraries.
 
-If you are uninstalling a Universal Messaging Enterprise Manager
+If you are uninstalling a Universal Messaging Enterprise Manager 
 fix, you do not need to shut down the Universal Messaging server.
 
-Uninstall using the Software AG Update Manager or
-Command Central (9.5 or later). For instructions, see the
-corresponding documentation
+Uninstall using the Software AG Update Manager or 
+Command Central (9.5 or later). For instructions, see the 
+corresponding documentation 
 at http://documentation.softwareag.com.
 
-Note: These instructions can only be used to uninstall the
-most recently installed fix. This action will revert your
-installation to the previously installed fix. You cannot
+Note: These instructions can only be used to uninstall the 
+most recently installed fix. This action will revert your 
+installation to the previously installed fix. You cannot 
 apply these instructions to the previously installed fix.
 
 
 
 10.0 Globalization
 
-This fix conforms to the internationalization standards of the webMethods
-product suite and includes support for operation in any country, locale, or
-language as specified in the Installing webMethods Products guide. It was not
+This fix conforms to the internationalization standards of the webMethods 
+product suite and includes support for operation in any country, locale, or 
+language as specified in the Installing webMethods Products guide. It was not 
 tested with non-English configurations and non-ASCII data. However, this fix has
-no globalization impact and can be applied to systems running in any supported
+no globalization impact and can be applied to systems running in any supported 
 locale or configuration.
 
 
 
 10.1 Localization
 
-This fix does not require an updated Language Pack. It might contain new
+This fix does not require an updated Language Pack. It might contain new 
 messages and these messages will appear in English.
 
 
 
 11.0 Copyright
 
-Copyright (c) 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc.,
-Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their
+Copyright (c) 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
+Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their 
 licensors.
 
-The name Software AG and all Software AG product names are either trademarks or
-registered trademarks of Software AG and/or Software AG USA Inc. and/or its
-subsidiaries and/or its affiliates and/or their licensors. Other company and
+The name Software AG and all Software AG product names are either trademarks or 
+registered trademarks of Software AG and/or Software AG USA Inc. and/or its 
+subsidiaries and/or its affiliates and/or their licensors. Other company and 
 product names mentioned herein may be trademarks of their respective owners.
 
-Detailed information on trademarks and patents owned by Software AG and/or its
+Detailed information on trademarks and patents owned by Software AG and/or its 
 subsidiaries is located at http://softwareag.com/licenses.
 
-This software may include portions of third-party products. For third-party
-copyright notices, license terms, additional rights or restrictions, please
-refer to "License Texts, Copyright Notices and Disclaimers of Third Party
-Products". For certain specific third-party license restrictions, please refer
-to section E of the Legal Notices available under "License Terms and Conditions
+This software may include portions of third-party products. For third-party 
+copyright notices, license terms, additional rights or restrictions, please 
+refer to "License Texts, Copyright Notices and Disclaimers of Third Party 
+Products". For certain specific third-party license restrictions, please refer 
+to section E of the Legal Notices available under "License Terms and Conditions 
 for Use of Software AG Products / Copyright and Trademark Notices of Software AG
-Products". These documents are part of the product documentation, located at
-http://softwareag.com/licenses and/or in the root installation directory of the
+Products". These documents are part of the product documentation, located at 
+http://softwareag.com/licenses and/or in the root installation directory of the 
 licensed product(s).
 
 
@@ -433,15 +508,15 @@ Authorized technical support contacts can reach Software AG Global Support in
 the following ways:
 
   Web: https://empower.softwareag.com (online support center)
-
+  
   E-mail: empower@softwareag.com
-
-You can find complete contact information in our Global Support Contact
+  
+You can find complete contact information in our Global Support Contact 
 Directory at:
 
 https://empower.softwareag.com/public_directory.asp
 
-You can also visit our Software AG Developer Communities to access additional
+You can also visit our Software AG Developer Communities to access additional 
 articles, demos, and tutorials, technical information, samples, useful resources,
 online discussion forums moderated by Software AG professionals, and more at:
 

@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.7 SP0 Fix 9 Readme
-                
-                                  June 2022
+                   Universal Messaging webMethods RealmServer 10.7 SP0 Fix 10 Readme
+               
+                                  July 2022
 
 ________________________________________________________________________________
 
-This file provides important information for applying Universal Messaging RealmServer 10.7 SP0 Fix 9 
-to Universal Messaging 10.7 SP0 installations. For additional information about Universal 
+This file provides important information for applying Universal Messaging RealmServer 10.7 SP0 Fix 
+10 to Universal Messaging 10.7 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.7 SP0 Fix 9 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.7 SP0 Fix 10 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.7_wM_RealmServer_Fix9
+NUM_10.7_wM_RealmServer_Fix10
 
 
 
@@ -73,12 +73,30 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
-NUM-18227 (NUM_10.7_wM_RealmServer_Fix9)
+NUM-18227 (NUM_10.7_wM_RealmServer_Fix10)
 
 Universal Messaging continuously writes NullPointerExceptions to the nirvana.log file, which 
 originate from the JMX context.
 The issue occurs if you create a secure interface and do not specify correct certificate attributes.
 The issue is resolved.
+
+NUM-18121 (NUM_10.7_wM_RealmServer_Fix10)
+
+Improve the performance of cluster pipeline processing by using a different data structure.
+
+NUM-18111 (NUM_10.7_wM_RealmServer_Fix10)
+
+The performance of a Universal Messaging server might deteriorate when a durable or a queue has many 
+outstanding events.
+The issue is resolved.
+
+NUM-16036 (NUM_10.7_wM_RealmServer_Fix10)
+
+When Universal Messaging is configured to use the Logback framework, rolling the logs might fail 
+with an exception.
+When rolling the logs on a Windows operating system, if the Logback framework fails to rename a log 
+file, it throws a NullPointerException.
+The issue is resolved. Universal Messaging now supports version 1.2.11 of the Logback framework.
 
 NUM-17870 (NUM_10.7_wM_RealmServer_Fix9)
 
