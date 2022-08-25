@@ -18,3 +18,7 @@ Universal Messaging Release Notes
 =================================
 
 This repository contains the readme files for the latest versions Universal Messaging Server that have been released as Docker images either on Docker Hub (https://hub.docker.com/r/softwareag/universalmessaging-server) or on SoftwareAG Public Container Repository (https://containers.softwareag.com/products/universalmessaging-server). 
+
+
+_____________________
+These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.	
