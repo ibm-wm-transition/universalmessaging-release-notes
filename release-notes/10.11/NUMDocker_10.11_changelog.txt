@@ -31,6 +31,12 @@ Minimal with JDK 11 as base image.
 Containers started from the Universal Messaging Server Docker image now use the HealthMonitor plugin 
 as health check.
 
+[2021-07-19] NUM-14466
+
+Introduced STARTUP_COMMAND environment variable for docker containers. Property value will be used 
+as command and will be executed in parallel once the server is up and running. This command can be 
+used to configure the server at start-up.
+
 [2021-03-29] NUM-15197
 
 The Universal Messaging RealmInformationCollector tool fails to run in a Docker container.
