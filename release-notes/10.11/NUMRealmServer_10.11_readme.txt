@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 7 Readme
+                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 8 Readme
                
-                                  August 2022
+                                  September 2022
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-7 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+8 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 7 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 8 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix7
+NUM_10.11_wM_RealmServer_Fix8
 
 
 
@@ -72,6 +72,49 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-18668 (NUM_10.11_wM_RealmServer_Fix8)
+
+When you enable the ThreadDumpOnSlowTask thread-pool monitoring property, Universal Messaging might generate many thread dumps over a short time, which could slow performance.
+The issue is resolved.
+
+NUM-18664 (NUM_10.11_wM_RealmServer_Fix8)
+
+The Docker image for the Universal Messaging server now supports the log4j2 framework for logging 
+and provides a default log4j2 configuration. The default log4j2 configuration does NOT store the 
+nirvana.log log file on disk but streams the log output to STDOUT.
+You can configure the UM log level by using the UM Admin API or Enterprise Manager after you enable 
+the log4J logging framework for the container.
+For more details about log4j2 support in Docker images for Universal Messaging, see the Universal 
+Messaging documentation.
+
+NUM-18582 (NUM_10.11_wM_RealmServer_Fix8)
+
+Cluster migration from an older Universal Messaging version to version 10.11 and higher might fail 
+with a recovery error.
+Some of the cluster nodes remain in recovery mode and Universal Messaging returns the following 
+error: " Index recovery can not find the target channel".
+The issue is resolved.
+
+NUM-18559 (NUM_10.11_wM_RealmServer_Fix8)
+
+After a restart of the master node in a cluster, Universal Messaging might not delete .mem files for 
+a channel on a slave node after all events are acknowledged.
+Universal Messaging might not delete the .mem files for a multi-file store channel on a slave node 
+in a cluster even after all events have been acknowledged. The issue occurs when the channel uses a 
+JMS engine and after you edit a storage property for the channel and restart the master node.
+The issue is resolved.
+
+NUM-18421 (NUM_10.11_wM_RealmServer_Fix8)
+
+Universal Messaging might log thread dumps twice in nirvana.log.
+When a stalled or slow moving task is detected, or a thread dump is requested, it might be logged 
+twice in nirvana.log which is unnecessary.
+The issue is resolved.
+
+NUM-18121 (NUM_10.11_wM_RealmServer_Fix8)
+
+Improve the performance of cluster pipeline processing by using a different data structure.
 
 NUM-18472 (NUM_10.11_wM_RealmServer_Fix7)
 

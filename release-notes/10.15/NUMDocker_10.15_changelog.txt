@@ -9,15 +9,11 @@ https://documentation.softwareag.com/universal_messaging/num10-11/10-11_UM_webhe
 
 
 
-[2022-09-08] NUM-18664
+[2022-10-18] NUM-18762
 
-The Docker image for the Universal Messaging server now supports the log4j2 framework for logging 
-and provides a default log4j2 configuration. The default log4j2 configuration does NOT store the 
-nirvana.log log file on disk but streams the log output to STDOUT.
-You can configure the UM log level by using the UM Admin API or Enterprise Manager after you enable 
-the log4J logging framework for the container.
-For more details about log4j2 support in Docker images for Universal Messaging, see the Universal 
-Messaging documentation.
+The Universal Messaging server might fail to start when run as a console process on Linux due to an 
+issue with the Java Service Wrapper version 3.5.50.
+The issue is resolved. The Java Service Wrapper version has been changed back to 3.5.43. 
 
 [2021-10-28] NUM-16857
 
