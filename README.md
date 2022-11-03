@@ -1,7 +1,7 @@
 # Universal Messaging Release Notes
 
  Copyright (c) 1999 - 2011 my-Channels Ltd  
- Copyright (c) 2012 - 2021 Software AG, Darmstadt, Germany and/or its licensors
+ Copyright (c) 2012 - 2022 Software AG, Darmstadt, Germany and/or its licensors
 
  SPDX-License-Identifier: Apache-2.0
 
