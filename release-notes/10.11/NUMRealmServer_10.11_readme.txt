@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 8 Readme
+                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 9 Readme
                
-                                  September 2022
+                                  November 2022
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-8 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+9 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 8 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 9 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix8
+NUM_10.11_wM_RealmServer_Fix9
 
 
 
@@ -73,9 +73,20 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
+NUM-18730 (NUM_10.11_wM_RealmServer_Fix9)
+
+ReadPool tasks could be stalled when connections are abruptly closed. This defect manifests itself 
+by server log entries such as 
+[Mon Jul 11 10:37:55.294 CEST 2022] [UM-Monitor-Thread] ThreadPool: <ReadPool> Stalled task found, 
+Thread ReadPool:86 has been active for 61500(ms) running task class 
+com.pcbsys.foundation.drivers.fServerHTTPDriver$OpenConnection, Idle Threads 89, Allocated Threads 
+100, Queued Tasks 0, Task Executed 1807968920
+This issue is now resolved. 
+
 NUM-18668 (NUM_10.11_wM_RealmServer_Fix8)
 
-When you enable the ThreadDumpOnSlowTask thread-pool monitoring property, Universal Messaging might generate many thread dumps over a short time, which could slow performance.
+When you enable the ThreadDumpOnSlowTask thread-pool monitoring property, Universal Messaging might 
+generate many thread dumps over a short time, which could slow performance.
 The issue is resolved.
 
 NUM-18664 (NUM_10.11_wM_RealmServer_Fix8)

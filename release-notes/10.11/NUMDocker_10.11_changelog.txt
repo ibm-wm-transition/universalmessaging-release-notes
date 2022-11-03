@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    October 2022
+                    November 2022
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -9,7 +9,7 @@ https://documentation.softwareag.com/universal_messaging/num10-11/10-11_UM_webhe
 
 
 
-[2022-09-08] NUM-18664
+[10.11.0.8] NUM-18664
 
 The Docker image for the Universal Messaging server now supports the log4j2 framework for logging 
 and provides a default log4j2 configuration. The default log4j2 configuration does NOT store the 
@@ -19,35 +19,7 @@ the log4J logging framework for the container.
 For more details about log4j2 support in Docker images for Universal Messaging, see the Universal 
 Messaging documentation.
 
-[2021-10-28] NUM-16857
-
-Running the Software AG command-line tools in the <SoftwareAG_directory>\common\bin directory
-in a Docker container fails due to an incorrect directory path in the scripts.
-The issue is resolved.
-
-[2021-10-12] NUM-16132
-
-Several files created by the Docker context were being included in the Docker image which could 
-potentially lead to issues later on when starting containers. 
-This issue has been resolved by adding Docker context files to the .dockerignore file.
-
-[2021-10-12] NUM-16877
-
-Universal Messaging Server Docker image has been updated to use Red Hat Universal Base Image 8 
-Minimal with JDK 11 as base image.
-
-[2021-10-12] NUM-16606
-
-Containers started from the Universal Messaging Server Docker image now use the HealthMonitor plugin 
-as health check.
-
-[2021-07-19] NUM-14466
-
-Introduced STARTUP_COMMAND environment variable for docker containers. Property value will be used 
-as command and will be executed in parallel once the server is up and running. This command can be 
-used to configure the server at start-up.
-
-[2021-03-29] NUM-15197
+[10.11.0.6] NUM-15197
 
 The Universal Messaging RealmInformationCollector tool fails to run in a Docker container.
 When you try to start the RealmInformationCollector in a Docker container, the tool returns
@@ -55,5 +27,33 @@ the following error: 'Universal Messaging realm server component not present in 
 installation directory (/opt/softwareag/UniversalMessaging/tools/runner/./../../..). 
 So this operation is not applicable.' 
 This issue is now resolved.
+
+[10.11.0.1] NUM-16857
+
+Running the Software AG command-line tools in the <SoftwareAG_directory>\common\bin directory
+in a Docker container fails due to an incorrect directory path in the scripts.
+The issue is resolved.
+
+[10.11.0.0] NUM-16132
+
+Several files created by the Docker context were being included in the Docker image which could 
+potentially lead to issues later on when starting containers. 
+This issue has been resolved by adding Docker context files to the .dockerignore file.
+
+[10.11.0.0] NUM-16877
+
+Universal Messaging Server Docker image has been updated to use Red Hat Universal Base Image 8 
+Minimal with JDK 11 as base image.
+
+[10.11.0.0] NUM-16606
+
+Containers started from the Universal Messaging Server Docker image now use the HealthMonitor plugin 
+as health check.
+
+[10.11.0.0] NUM-14466
+
+Introduced STARTUP_COMMAND environment variable for docker containers. Property value will be used 
+as command and will be executed in parallel once the server is up and running. This command can be 
+used to configure the server at start-up.
 
 
