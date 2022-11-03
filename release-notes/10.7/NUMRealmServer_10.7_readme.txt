@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.7 SP0 Fix 10 Readme
+                   Universal Messaging webMethods RealmServer 10.7 SP0 Fix 12 Readme
                
-                                  July 2022
+                                  November 2022
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.7 SP0 Fix 
-10 to Universal Messaging 10.7 SP0 installations. For additional information about Universal 
+12 to Universal Messaging 10.7 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.7 SP0 Fix 10 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.7 SP0 Fix 12 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.7_wM_RealmServer_Fix10
+NUM_10.7_wM_RealmServer_Fix12
 
 
 
@@ -73,7 +73,29 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
-NUM-18227 (NUM_10.7_wM_RealmServer_Fix10)
+NUM-18668 (NUM_10.7_wM_RealmServer_Fix12)
+
+When you enable the ThreadDumpOnSlowTask thread-pool monitoring property, Universal Messaging might 
+generate many thread dumps over a short time, which could slow performance.
+The issue is resolved.
+
+NUM-18421 (NUM_10.7_wM_RealmServer_Fix12)
+
+Universal Messaging might log thread dumps twice in nirvana.log.
+When a stalled or slow moving task is detected, or a thread dump is requested, it might be logged 
+twice in nirvana.log which is unnecessary.
+The issue is resolved.
+
+NUM-18475 (NUM_10.7_wM_RealmServer_Fix11)
+
+Creating a durable on the JMX server fails with a MalformedObjectNameException.
+When you have enabled the JMX server and try to create a durable on a channel, Universal Messaging 
+writes a MalformedObjectNameException in the nirvana.log file. The durable gets created on the 
+Universal Messaging server, but not on the JMX server. The issue occurs because the JMX beans and 
+attributes cannot validate a durable name containing special characters.
+The issue is now resolved.
+
+NUM-18197 (NUM_10.7_wM_RealmServer_Fix10)
 
 Universal Messaging continuously writes NullPointerExceptions to the nirvana.log file, which 
 originate from the JMX context.
@@ -191,6 +213,10 @@ fatal though the log entry did not indicate this.
 Two configuration items have been remove NHPScanTime and NHPTimeout from the 'Global Values' 
 Configuration group, the behavior of these configuration items is now consolidated under the 
 'Connection Config' group setting IdleDriverTimeout.
+
+NUM-14367 (NUM_10.7_wM_RealmServer_Fix8)
+
+NA
 
 NUM-17735 (NUM_10.7_wM_RealmServer_Fix7)
 
@@ -814,6 +840,31 @@ NUM-8858 (NUM_10.7_wM_RealmServer_Fix1)
 In selectors for protobuf events, the values in integer arrays are not compared properly.
 This issue is now resolved.
 
+NUM-16027 (NUM_10.7_wM_RealmServer_Fix1)
+
+NA
+
+NUM-15504 (NUM_10.7_wM_RealmServer_Fix1)
+
+Running a Universal Messaging command-line tool using the runUMTool
+Tools Runner application might result in an out-of-memory exception in the JVM.
+The JVM might run out of memory if the tool encounters a memory problem or leak.
+The issue occurs because the runUMTool application does not have a memory limit.
+The issue is resolved. Two new environment variables, UM_JAVA_MIN_MEM and UM_JAVA_MAX_MEM,
+have been added. You can use them to specify the minimum and maximum memory used by the tool
+you are executing.
+Environment Variable Configuration Reference
+Specify the minimum and maximum memory used by the command-line tool you are executing by setting 
+the following variables:
+- UM_JAVA_MIN_MEM=-XmsXXX, where XXX is the value of the minimum memory limit in megabytes.
+The default value is "-Xms256m".
+- UM_JAVA_MAX_MEM=-XmxXXX, where XXX is the value of the maximum memory limit in megabytes.
+The default value is "-Xmx512m".
+Specify the two environment variables in the command prompt before running the
+runUMTool command:
+On Windows: SET UM_JAVA_MIN_MEM=-Xms256m
+On Unix: UM_JAVA_MIN_MEM=-Xms256m
+
 
 8.0 Installation
 
@@ -834,7 +885,7 @@ see the corresponding documentation at http://documentation.softwareag.com.
 (*) Universal Messaging cluster is supporting rolling updates for its nodes.
 There is a strong recommendation to start applying the new fixes on the Slave nodes and leave the
 Master node to be the last one.
-(*) Starting with 10.7 Fix 8, Universal Messaging provides updated versions of security libraries with 
+(*) Starting with 10.11 Fix 3, Universal Messaging provides updated versions of security libraries with 
 the Universal Messaging realm server fixes, if any of these libraries has been updated. You can find 
 the libraries in the UniversalMessaging\lib folder.
 

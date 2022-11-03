@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    August 2022
+                    November 2022
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -9,12 +9,7 @@ https://documentation.softwareag.com/universal_messaging/num10-7/10-7_UM_webhelp
 
 
 
-[2021-10-12] NUM-16606
-
-Containers started from the Universal Messaging Server Docker image now use the HealthMonitor plugin 
-as health check.
-
-[2021-03-29] NUM-15197
+[10.7.0.1] NUM-15197
 
 The Universal Messaging RealmInformationCollector tool fails to run in a Docker container.
 When you try to start the RealmInformationCollector in a Docker container, the tool returns
@@ -22,5 +17,10 @@ the following error: 'Universal Messaging realm server component not present in 
 installation directory (/opt/softwareag/UniversalMessaging/tools/runner/./../../..). 
 So this operation is not applicable.' 
 This issue is now resolved.
+
+[10.7.0.0] NUM-16606
+
+Containers started from the Universal Messaging Server Docker image now use the HealthMonitor plugin 
+as health check.
 
 
