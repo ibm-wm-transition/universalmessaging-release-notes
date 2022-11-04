@@ -885,7 +885,7 @@ see the corresponding documentation at http://documentation.softwareag.com.
 (*) Universal Messaging cluster is supporting rolling updates for its nodes.
 There is a strong recommendation to start applying the new fixes on the Slave nodes and leave the
 Master node to be the last one.
-(*) Starting with 10.11 Fix 3, Universal Messaging provides updated versions of security libraries with 
+(*) Starting with 10.7 Fix 8, Universal Messaging provides updated versions of security libraries with 
 the Universal Messaging realm server fixes, if any of these libraries has been updated. You can find 
 the libraries in the UniversalMessaging\lib folder.
 
