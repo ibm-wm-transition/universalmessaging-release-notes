@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 1 Readme
+                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 2 Readme
                
-                                  October 2022
+                                  November 2022
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-1 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+2 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 1
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 2
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix1
+NUM_10.15_wM_RealmServer_Fix2
 
 
 
@@ -73,17 +73,37 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
-NUM-18762 (NUM_10.15_wM_RealmServer_Fix1)
+NUM-18913 (NUM_10.15_wM_RealmServer_Fix2)
 
-The Universal Messaging server might fail to start when run as a console process on Linux due to an 
-issue with the Java Service Wrapper version 3.5.50.
-The issue is resolved. The Java Service Wrapper version has been changed back to 3.5.43. Any 
-existing instances of the Universal Messaging server running on Linux will be re-configured to use 
-the 3.5.43 version of the Java Service Wrapper.
-Note: If you are using Command Central to provision and manage Universal Messaging, in your 
-composite template, make sure to add a Fixes section that includes the respective Universal 
-Messaging fix that provides the changed Wrapper version. For more information about working with 
-templates, see the Command Central documentation.
+The Docker image for the Universal Messaging server now supports the log4j2 framework for logging 
+and provides a default log4j2 configuration. The default log4j2 configuration does NOT store the 
+nirvana.log log file on disk but streams the log output to STDOUT.
+You can configure the UM the server logging level, by using the UM Admin API or Enterprise Manager 
+after you enable the Log4j2 logging framework for the container.
+For more details about log4j2 support in Docker images for Universal Messaging, see the Universal 
+Messaging documentation.
+
+NUM-18668 (NUM_10.15_wM_RealmServer_Fix2)
+
+When you enable the ThreadDumpOnSlowTask thread-pool monitoring property, Universal Messaging might 
+generate many thread dumps over a short time, which could slow performance.
+The issue is resolved.
+
+NUM-18421 (NUM_10.15_wM_RealmServer_Fix2)
+
+Universal Messaging might log thread dumps twice in nirvana.log.
+When a stalled or slow moving task is detected, or a thread dump is requested, it might be logged 
+twice in nirvana.log which is unnecessary.
+The issue is resolved.
+
+NUM-18890 (NUM_10.15_wM_RealmServer_Fix2)
+
+When you use Software AG Installer to create a Universal Messaging Docker image, the logs directory 
+is not present by default in the installation. 
+Instead, the directory gets created when you run the container. This sets the directory's user to 
+root, which makes the logs directory inaccessible to the Universal Messaging server in the 
+container, because the server runs as non-root user.
+This issue is now resolved.
 
 
 8.0 Installation
