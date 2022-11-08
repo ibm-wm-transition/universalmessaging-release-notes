@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.11 SP0 Fix 9 Readme
+                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 10 Readme
                
                                   November 2022
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-9 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+10 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 9 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 10 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix9
+NUM_10.11_wM_RealmServer_Fix10
 
 
 
@@ -72,6 +72,16 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-16652 (NUM_10.11_wM_RealmServer_Fix10)
+
+In Legion of the Bouncy Castle BC before 1.61, attackers can obtain sensitive information about a 
+private exponent because of Observable Differences in Behavior to Error Inputs. This occurs in 
+org.bouncycastle.crypto.encodings.OAEPEncoding. Sending invalid ciphertext that decrypts to a short 
+payload in the OAEP Decoder could result in the throwing of an early exception, potentially leaking 
+some information about the private exponent of the RSA private key performing the encryption.
+https://nvd.nist.gov/vuln/detail/CVE-2020-26939
+CVSS Score: 5.3 Medium
 
 NUM-18730 (NUM_10.11_wM_RealmServer_Fix9)
 
