@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 2 Readme
+                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 3 Readme
                
-                                  November 2022
+                                  February 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-2 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+3 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 2
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 3
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix2
+NUM_10.15_wM_RealmServer_Fix3
 
 
 
@@ -73,6 +73,61 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
+NUM-19017 (NUM_10.15_wM_RealmServer_Fix3)
+
+When you use Software AG Installer to create a Universal Messaging Docker image, the JMX agent port 
+does not have a default value. This leads to an incorrect entry  being set in the Universal 
+Messaging server configuration file. As a result, the Universal Messaging server fails to start and 
+the container exits immediately. 
+This issue is now resolved.
+
+NUM-18559 (NUM_10.15_wM_RealmServer_Fix3)
+
+After a restart of the master node in a cluster, Universal Messaging might not delete .mem files for 
+a channel on a slave node after all events are acknowledged.
+Universal Messaging might not delete the .mem files for a multi-file store channel on a slave node 
+in a cluster even after all events have been acknowledged. The issue occurs when the channel uses a 
+JMS engine and after you edit a storage property for the channel and restart the master node.
+The issue is resolved.
+
+NUM-18425 (NUM_10.15_wM_RealmServer_Fix3)
+
+Creating a durable on the JMX server fails with a MalformedObjectNameException.
+When you have enabled the JMX server and try to create a durable on a channel, Universal Messaging 
+writes a MalformedObjectNameException in the nirvana.log file. The durable gets created on the 
+Universal Messaging server, but not on the JMX server. The issue occurs because the JMX beans and 
+attributes cannot validate a durable name containing special characters.
+The issue is now resolved.
+
+NUM-18339 (NUM_10.15_wM_RealmServer_Fix3)
+
+A Universal Messaging Java client fails to connect to the server when the hostname of the server or 
+of the machine that hosts the server contains special characters, such as an underscore.
+The issue occurs because the Java URI API does not support special characters in hostnames.
+The issue is resolved.
+
+NUM-17944 (NUM_10.15_wM_RealmServer_Fix3)
+
+The creation of search rules happens after the escaped characters are identified and marked as such. 
+Now it is possible to escape the '%' character because it is not used for splitting the input 
+string early in the process anymore and it can be treated as a normal character.
+
+NUM-17909 (NUM_10.15_wM_RealmServer_Fix3)
+
+A Universal Messaging realm server logs errors about insufficient disk space even when the free disk 
+space is sufficient.
+The server logs an error into the nirvana.log file that "Free disk space has reduced below warning 
+threshold percentage."
+The issue is resolved. Now the server logs an error message only when the free disk space required 
+for the realm server to continue processing is below the defined minimum threshold.
+
+NUM-17708 (NUM_10.15_wM_RealmServer_Fix3)
+
+Pre-10.7 synchronous clients are not able to retrieve events from a standard, non-durable queue on a 
+slave node in a cluster.
+The fix for this issue will ensure that window sizes are handled properly for older, pre-10.7 
+synchronous clients, while post-10.7 synchronous clients will use the new prefetch API instead.
+
 NUM-18913 (NUM_10.15_wM_RealmServer_Fix2)
 
 The Docker image for the Universal Messaging server now supports the log4j2 framework for logging 
@@ -98,12 +153,13 @@ The issue is resolved.
 
 NUM-18890 (NUM_10.15_wM_RealmServer_Fix2)
 
-When you use Software AG Installer to create a Universal Messaging Docker image, the logs directory 
-is not present by default in the installation. 
-Instead, the directory gets created when you run the container. This sets the directory's user to 
-root, which makes the logs directory inaccessible to the Universal Messaging server in the 
-container, because the server runs as non-root user.
+In UM Docker images created via the SAG Installer the logs directory is not present by default in 
+the installation and gets created when a container is run. This sets directory's owner to root, 
+which makes it inaccessible to the UM server in the container, as it runs as "sagadmin".
 This issue is now resolved.
+
+NUM-17222 (NUM_10.15_wM_RealmServer_Fix1)
+
 
 
 8.0 Installation
@@ -190,7 +246,7 @@ messages and these messages will appear in English.
 
 11.0 Copyright
 
-Copyright (c) 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
+Copyright (c) 2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
 Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their 
 licensors.
 
