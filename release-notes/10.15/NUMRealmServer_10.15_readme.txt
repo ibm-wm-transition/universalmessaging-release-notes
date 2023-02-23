@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 3 Readme
+                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 5 Readme
                
                                   February 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-3 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+5 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 3
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 5
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix3
+NUM_10.15_wM_RealmServer_Fix5
 
 
 
@@ -72,6 +72,86 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-19208 (NUM_10.15_wM_RealmServer_Fix5)
+
+Universal Messaging now supports defining the number of concurrent connections per user.
+You can use a new realm configuration property, "MaxNoOfConnectionsPerUserName", part of the 
+"Connection Config" group in the Enterprise Manager, to specify the number of concurrent 
+connections per user. The default is -1, which means no limit is set on the number of connections. 
+Valid values range between -1 and 2147483647. When you set a limit, if connections exceed the 
+specified number, the client will get an nSecurityException. However, admin connections with the 
+"Realm Override Connection Count" permission are still allowed to connect to the realm server.
+In addition, the existing "MaxNoOfConnections" property, controls the total number of concurrent 
+connections to the server. When you set a limit on the total number, connections that exceed the 
+limit are rejected if they are non-admin connections or if they do not have the "Realm Override 
+Connection Count" permission. The default is -1, which means no limit is set on the number of 
+connections. Valid values range between -1 and 2147483647.
+
+NUM-19154 (NUM_10.15_wM_RealmServer_Fix4)
+
+ReadPool tasks could be stalled when connections are abruptly closed. This defect manifests itself 
+by server log entries such as 
+[Mon Jul 11 10:37:55.294 CEST 2022] [UM-Monitor-Thread] ThreadPool: <ReadPool> Stalled task found, 
+Thread ReadPool:86 has been active for 61500(ms) running task class 
+com.pcbsys.foundation.drivers.fServerHTTPDriver$OpenConnection, Idle Threads 89, Allocated Threads 
+100, Queued Tasks 0, Task Executed 1807968920
+This issue is now resolved. 
+
+NUM-18730 (NUM_10.15_wM_RealmServer_Fix4)
+
+ReadPool tasks could be stalled when connections are abruptly closed. This defect manifests itself 
+by server log entries such as 
+[Mon Jul 11 10:37:55.294 CEST 2022] [UM-Monitor-Thread] ThreadPool: <ReadPool> Stalled task found, 
+Thread ReadPool:86 has been active for 61500(ms) running task class 
+com.pcbsys.foundation.drivers.fServerHTTPDriver$OpenConnection, Idle Threads 89, Allocated Threads 
+100, Queued Tasks 0, Task Executed 1807968920
+This issue is now resolved. 
+
+NUM-18564 (NUM_10.15_wM_RealmServer_Fix4)
+
+A Universal Messaging client might take a long time to detect a connection failure.
+The issue is resolved. Universal Messaging keep alive performance has been optimized for improved 
+detection of broken socket connections.
+For all nSession clients, each client will now check for the reception of a server-side keep alive. 
+Note that you configure server-side keep alive intervals by setting the "KeepAlive" realm 
+configuration property under "Connection Config" in Enterprise Manager. If this keep alive is not 
+received on time, the session is closed, and a reconnection attempt is made. Also note that 
+reconnections can be disabled at an API level.
+In addition, you can use a new Java system property, com.softwareag.um.client.missed_keep_alives=<n> 
+to set the number of missed server-side keep alives before a connection is closed.
+Java system property reference
+com.softwareag.um.client.missed_keep_alives=<n>
+Specifies the number of missed server-side keep alives before a connection is closed. The default 
+value is 1. A value of 1 means that if a single keep alive is missed by the client, the session is 
+closed. 
+To disable server-side keep alive checking, set the Java property to 0 (zero).
+Note that the Java property is consulted only once upon JVM startup.
+For more information, see the Universal Messaging Java API documentation on:
+com.pcbsys.nirvana.client.nConstants#setPermittedKeepAlivesMissed
+com.pcbsys.nirvana.client.nConstants.MISSED_KEEP_ALIVES
+For more information about the "KeepAlive" realm configuration property, see the Universal Messaging 
+Administration Guide.
+
+NUM-18479 (NUM_10.15_wM_RealmServer_Fix4)
+
+Reintroduced the Id option of the nRealmTool utility to modify the host and port.
+
+NUM-18372 (NUM_10.15_wM_RealmServer_Fix4)
+
+In a Universal Messaging (UM) cluster that uses multiplexed sessions, the primary realm server 
+instance stops responding because of increased CPU usage, which stalls the tasks on the UM server. 
+The issue occurs when the multiplexed SSL session between the server and client does not close 
+properly.
+The issue is resolved.
+javax.net.ssl.SSLException: closing inbound before receiving peer's close_notify
+The fix for this issue involves correcting and refactoring specific code in the server's NIO layer 
+to address the issue.
+
+NUM-18330 (NUM_10.15_wM_RealmServer_Fix4)
+
+Fixed a rare deadlock caused by an abnormal close in the Javascript websocket driver.  A side effect 
+of this deadlock is that a UM server may shutdown and automatically restart.
 
 NUM-19017 (NUM_10.15_wM_RealmServer_Fix3)
 
