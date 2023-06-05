@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 5 Readme
+                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 9 Readme
                
-                                  February 2023
+                                  June 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-5 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+9 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 5
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 9
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix5
+NUM_10.15_wM_RealmServer_Fix9
 
 
 
@@ -73,7 +73,111 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
-NUM-19208 (NUM_10.15_wM_RealmServer_Fix5)
+NUM-19860 (NUM_10.15_wM_RealmServer_Fix9)
+
+Universal Messaging (UM) now logs the total time it takes to start or shut down a UM server.
+
+NUM-19834 (NUM_10.15_wM_RealmServer_Fix9)
+
+Universal Messaging (UM) now logs information about the interfaces that are added or deleted from a 
+UM server in the server logs.
+
+NUM-19794 (NUM_10.15_wM_RealmServer_Fix9)
+
+Cluster migration from an older Universal Messaging version to version 10.11 and higher might fail 
+with a recovery error.
+Some of the cluster nodes remain in recovery mode and Universal Messaging returns the following 
+error: " Index recovery can not find the target channel".
+The issue is resolved.
+
+NUM-19658 (NUM_10.15_wM_RealmServer_Fix9)
+
+Clients version 10.3 and older might fail to receive events from a queue
+when they are connected to a slave node in a Universal Messaging cluster.
+The issue occurs when a synchronous queue consumer consumes events from the queue.
+Under these conditions, the slave might return an array of one event to the synchronous queue 
+consumer.
+The issue is resolved.
+
+NUM-19413 (NUM_10.15_wM_RealmServer_Fix9)
+
+Adding or modifying supported ciphers for a Universal Messaging server SSL interface using 
+command-line tools might fail.
+When you run the AddHTTPSInterface, AddSSLInterface, or ModifyInterface command-line tools and 
+specify the 'ciphers' optional parameter, the tools might fail to execute, although the specified 
+ciphers are part of the list of supported SSL ciphers. Adding a cipher might fail with the 
+following error: "Illegal argument passed: Cipher not found in supported cipher list".
+The issue is resolved.
+
+NUM-19227 (NUM_10.15_wM_RealmServer_Fix9)
+
+A vulnerability of 3d party component Snakeyaml  in jmx_prometheus_javaagent.jar was discovered (as  
+Snakeyaml of 1.29 v was used in jmx_prometheus_javaagent.jar)
+The issue is resolved. The jmx_prometheus_javaagent binary has been upgraded from version 0.16.1 to 
+version 0.18.0 (which contains snakeyaml 2.0 - which mitigated the vulnerability).
+
+NUM-18899 (NUM_10.15_wM_RealmServer_Fix9)
+
+Universal Messaging might fail to start with an ?event key outside of range for store key? error.
+When you start a realm server, Universal Messaging writes the following error message in the 
+nirvana.log file: ?Nirvana Realm Server shutting down due to fatal file I/O error occurred: 
+MultiFileStore, store file? Key outside of range for store Key?.
+The issue is now resolved. 
+
+NUM-17449 (NUM_10.15_wM_RealmServer_Fix9)
+
+When using Protobuf messages, UM uses the default Protobuf 3 values. This behavior is now 
+configurable via a server side configuration option - TreatUnsetFieldsAsNull . Its default value is 
+false to retain the current behavior where unset string fields are treated as empty strings and not 
+NULL. To change that behavior and treat unset fields as NULL,  set the configuration value of 
+TreatUnsetFieldsAsNull to true. 
+One can configure TreatUnsetFieldsAsNull via EnterpriseManager->Realm->Config->Show Advanced 
+Config->Advanced Configuration->Protobuf Config->TreatUnsetFieldsAsNull.
+
+NUM-19512 (NUM_10.15_wM_RealmServer_Fix6)
+
+When a Universal Messaging (UM) client with version 10.7 or lower connects to a UM server with 
+version 10.11 or higher, the session reconnect handlers throw the following nSecurity event: 
+"Error: Data Groups/Streams not supported on Server." This error message indicates that Universal 
+Messaging version 10.11 or higher does not support Data Groups and Data Streams.
+The issue is now resolved.
+
+NUM-19450 (NUM_10.15_wM_RealmServer_Fix6)
+
+CPU usage in Universal Messaging might spike due to Prometheus monitoring.
+When JMX monitoring using Prometheus is enabled in a Universal Messaging server,
+CPU usage can reach 99% even during insignificant loads.
+The issue is resolved. Universal Messaging now provides an updated jmx_sag_um_exporter.yaml file in 
+the <Software_AG_directory>\UniversalMessaging\sever\templates directory, which limits additional 
+queries made by the JMX Exporter agent. For information about how to apply the new file to existing 
+server instances, see the topic on monitoring Universal Messaging using Prometheus in the Universal 
+Messaging documentation.
+
+NUM-19302 (NUM_10.15_wM_RealmServer_Fix6)
+
+When Integration Server uses Universal Messaging as a JMS provider, it might stop responding when 
+you try to enable or disable JMS triggers.
+The issue is resolved.
+
+NUM-19293 (NUM_10.15_wM_RealmServer_Fix6)
+
+Creation of an interface when there is an existing interface with the same port was allowed.
+This issue is resolved.
+
+NUM-19253 (NUM_10.15_wM_RealmServer_Fix6)
+
+Enterprise Manager displays invalid realm property values imported from an XML realm configuration 
+file using the ninstancemanager command-line tool.
+After you import a realm configuration from an XML file using ninstancemanager and the configuration 
+contains invalid realm property values, Universal Messaging might not automatically replace the 
+invalid values with valid ones on start-up. As a result, Enterprise Manager displays the invalid 
+property values, which could lead to exceptions and unexpected behavior of Enterprise Manager.
+The issue is resolved. 
+
+NUM-19231 (NUM_10.15_wM_RealmServer_Fix6)
+
+
+NUM-19410 (NUM_10.15_wM_RealmServer_Fix5)
 
 Universal Messaging now supports defining the number of concurrent connections per user.
 You can use a new realm configuration property, "MaxNoOfConnectionsPerUserName", part of the 
@@ -98,15 +202,14 @@ com.pcbsys.foundation.drivers.fServerHTTPDriver$OpenConnection, Idle Threads 89,
 100, Queued Tasks 0, Task Executed 1807968920
 This issue is now resolved. 
 
-NUM-18730 (NUM_10.15_wM_RealmServer_Fix4)
+NUM-19131 (NUM_10.15_wM_RealmServer_Fix4)
 
-ReadPool tasks could be stalled when connections are abruptly closed. This defect manifests itself 
-by server log entries such as 
-[Mon Jul 11 10:37:55.294 CEST 2022] [UM-Monitor-Thread] ThreadPool: <ReadPool> Stalled task found, 
-Thread ReadPool:86 has been active for 61500(ms) running task class 
-com.pcbsys.foundation.drivers.fServerHTTPDriver$OpenConnection, Idle Threads 89, Allocated Threads 
-100, Queued Tasks 0, Task Executed 1807968920
-This issue is now resolved. 
+Reintroduced the Id option of the nRealmTool utility to modify the host and port.
+
+NUM-18982 (NUM_10.15_wM_RealmServer_Fix4)
+
+Fixed a rare deadlock caused by an abnormal close in the Javascript websocket driver. A side effect 
+of this deadlock is that a UM server may shutdown and automatically restart.
 
 NUM-18564 (NUM_10.15_wM_RealmServer_Fix4)
 
@@ -133,10 +236,6 @@ com.pcbsys.nirvana.client.nConstants.MISSED_KEEP_ALIVES
 For more information about the "KeepAlive" realm configuration property, see the Universal Messaging 
 Administration Guide.
 
-NUM-18479 (NUM_10.15_wM_RealmServer_Fix4)
-
-Reintroduced the Id option of the nRealmTool utility to modify the host and port.
-
 NUM-18372 (NUM_10.15_wM_RealmServer_Fix4)
 
 In a Universal Messaging (UM) cluster that uses multiplexed sessions, the primary realm server 
@@ -147,11 +246,6 @@ The issue is resolved.
 javax.net.ssl.SSLException: closing inbound before receiving peer's close_notify
 The fix for this issue involves correcting and refactoring specific code in the server's NIO layer 
 to address the issue.
-
-NUM-18330 (NUM_10.15_wM_RealmServer_Fix4)
-
-Fixed a rare deadlock caused by an abnormal close in the Javascript websocket driver.  A side effect 
-of this deadlock is that a UM server may shutdown and automatically restart.
 
 NUM-19017 (NUM_10.15_wM_RealmServer_Fix3)
 
@@ -237,9 +331,6 @@ In UM Docker images created via the SAG Installer the logs directory is not pres
 the installation and gets created when a container is run. This sets directory's owner to root, 
 which makes it inaccessible to the UM server in the container, as it runs as "sagadmin".
 This issue is now resolved.
-
-NUM-17222 (NUM_10.15_wM_RealmServer_Fix1)
-
 
 
 8.0 Installation

@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    February 2023
+                    June 2023
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -27,6 +27,13 @@ Instead, the directory gets created when you run the container. This sets the di
 root, which makes the logs directory inaccessible to the Universal Messaging server in the 
 container, because the server runs as non-root user.
 This issue is now resolved.
+
+[10.15.0.0] NUM-19088
+
+Several classpath configurations for Log4j2 were missing from the Server_Common.conf file in our 
+Universal Messaging Server docker images. As a result it was not possible to start containers with 
+Log4j2 logging enabled.
+The issue is now resolved.
 
 [10.15.0.0] NUM-16857
 
