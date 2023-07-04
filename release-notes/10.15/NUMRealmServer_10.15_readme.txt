@@ -1,11 +1,11 @@
-                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 9 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 10 Readme
                
-                                  June 2023
+                                  July 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-9 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+10 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 9
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 10
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix9
+NUM_10.15_wM_RealmServer_Fix10
 
 
 
@@ -72,6 +72,79 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-20155 (NUM_10.15_wM_RealmServer_Fix10)
+
+Before this solution, when the header-fields count exceeded count 30 resulted in 
+ArrayIndexOutOfBoundException.
+With this fix, now can process as many header-fields as needed, until it does not cross the 
+max-header-buffer-size set.
+
+NUM-20047 (NUM_10.15_wM_RealmServer_Fix10)
+
+Universal Messaging (UM) clusters within a zone with bi-directional forwarding of events have event 
+forwarding and stability issues under high load conditions. 
+When the issues occur, the server logs include entries about deadlocks, connection multiplexer IO 
+exceptions, and stalled tasks with Join Daemon.
+In addition, a UM realm instance in the cluster might cause an increase in CPU usage.
+The issues are resolved.
+
+NUM-20017 (NUM_10.15_wM_RealmServer_Fix10)
+
+Universal Messaging might reach a state of deadlock when simultaneously attempting to close multiple 
+connections due to a read request timeout.?
+The issue might occur when the server tries to close the connections of multiple subscribers of 
+channels with shared durables.
+The issue is now resolved.
+
+NUM-19966 (NUM_10.15_wM_RealmServer_Fix10)
+
+A Universal Messaging server instance fails to start when the JMX Exporter agent is enabled on the 
+AIX operating system. The issue occurs because some special characters in the 
+jmx_sag_um_exporter.yaml file cause encoding issues.
+The issue is resolved. 
+
+NUM-19915 (NUM_10.15_wM_RealmServer_Fix10)
+
+Having many synchronous consumers active on a queue might cause high CPU usage and slow performance 
+in Universal Messaging.
+The issue is resolved.
+
+NUM-19895 (NUM_10.15_wM_RealmServer_Fix10)
+
+A Universal Messaging client might fail to connect to the server with a "backlog exceeded" error.
+The client cannot connect to the server and Universal Messaging writes the following
+error to the nirvana.log: "Backlog queue exceeded limit, unable to process incoming connection".
+In addition, the client might report many slow-moving tasks related to event processing. The issue 
+occurs
+after installing the fix for NUM-17781 for your Universal Messaging version, which introduces a 
+regression.
+The issue is resolved. The restriction on the total number of connections being authenticated now 
+falls back on
+the Connection Monitor to ensure that there are not too many connections being authenticated at the 
+same time.
+This enforces the limit based on the host from which the connections are coming and not based on the 
+total of connections.
+
+NUM-17831 (NUM_10.15_wM_RealmServer_Fix10)
+
+UM server was not able to handle more then thousand simultaneous MQTT connection gracefully- MQTT 
+connect time would increase and MQTT clients might start experiencing connect timeouts.
+This is now resolved by optimizing the MQTT connect handling on the server. Depending on the 
+environment used, single UM server should be able to handle more then 5000 MQTT connect operations 
+simultaneously.
+Also UM's ability to work with thousands stores and consumers is also improved.
+Following important optimizations were added as part of this fix:
+- Durable state saving was optimized by using an buffered output stream, so the save operation is 
+performed faster on disk.
+- MQTT configuration to configure the EventsPerSpinle channel configuration for auto created topics 
+is added:
+"Protocol MQTT Config"-> "AutoCreatedStoreSpindleSize". Defaults to 50000. Previously stores were 
+created with eventsPerSpindle = 0, which was leading to MQTT auto created stores were created as 
+non-multifile stores.
+- A ConcurrentModificationException in the nInterestStorageValidator is fixed.
+- For single UM server deployment (non-A/A clustering), the duplicate MQTT ClientID detection is 
+optimized to not persist connection state on disk.
 
 NUM-19860 (NUM_10.15_wM_RealmServer_Fix9)
 
