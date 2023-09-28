@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 10 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 12 Readme
                
-                                  July 2023
+                                  September 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-10 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+12 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 10
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 12
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix10
+NUM_10.15_wM_RealmServer_Fix12
 
 
 
@@ -73,12 +73,187 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
+NUM-20614 (NUM_10.15_wM_RealmServer_Fix12)
+
+Added rescheduling of AutoUpdate task with 2000ms delay in cases where the connection to the remote 
+node is missing from nRealmConnectionManager's connections list. The goal is to allow for the 
+connection to be added to this collection as part of the connection initiation process and then 
+execute the AutoUpdate task. The rescheduling is allowed in the span of 30 seconds.
+
+NUM-20613 (NUM_10.15_wM_RealmServer_Fix12)
+
+Universal Messaging (UM) now uses the Java Service Wrapper version 3.5.53 on all operating systems. 
+A script will modify and switch any existing UM server instances running on Linux, AIX, and OSX to 
+the Java Service Wrapper version 3.5.53.
+
+NUM-20544 (NUM_10.15_wM_RealmServer_Fix12)
+
+Universal Messaging might still have high-CPU usage issues when using the AMQP protocol despite the 
+AMQP performance optimizations introduced in NUM-17343.
+The issue affects Universal Messaging versions 10.11 and 10.15.
+The issue is resolved.
+
+NUM-20421 (NUM_10.15_wM_RealmServer_Fix12)
+
+Universal Messaging exposes a new JMX bean, named Universal Messaging User Connections, which 
+enables access to data related to the number of current sessions that each user has established to 
+the server.
+You can use the related NumberOfConnections JMX metric and sag_um_connections_per_user Prometheus 
+metric for monitoring. The name of each UserConnectionsBean object is the same as the name of the 
+user to whom it corresponds.
+For more information about the new JMX bean and metrics, see the Universal Messaging Administration 
+Guide.
+
+NUM-20419 (NUM_10.15_wM_RealmServer_Fix12)
+
+The JMX metrics that Universal Messaging provides, and the respective
+Prometheus metrics, have issues related to incorrect data types and usage, and
+inconsistent naming and descriptions.
+The issues are resolved. All JMX metrics and the Prometheus metrics in the
+jmx_sag_um_exporter.yaml file now have correct and uniform date types, usage,
+names, and descriptions.
+In addition, you can use the following new JMX metrics and corresponding Prometheus metrics:
+JMX metrics
+- DirectMemoryMax
+- DirectMemoryFree
+- DiskTotal
+- DiskFree
+Prometheus metrics
+- sag_um_server_memory_direct_max_bytes
+- sag_um_server_memory_direct_free_bytes
+- sag_um_server_disk_total_bytes
+- sag_um_server_disk_free_bytes
+For full information about the available JMX and Prometheus metrics and their
+usage, see the Universal Messaging Administration Guide.
+
+NUM-20406 (NUM_10.15_wM_RealmServer_Fix12)
+
+Docker script was using hardcoded wrapper constant in Server_Common.conf, to enable the JMX 
+configuration [sed -i "s|\(.*wrapper.java.additional.27.*\)|\wrapper.java.additional.27=-...]
+This is easily avoided by getting the last wrapper property index and setting the same config 
+dynamically.
+
+NUM-20315 (NUM_10.15_wM_RealmServer_Fix12)
+
+Xalan library updated from version 2.7.2 to version 2.7.3
+
+NUM-20313 (NUM_10.15_wM_RealmServer_Fix12)
+
+Bouncy Castle libraries updated from version 1.60 to version 1.70
+
+NUM-20194 (NUM_10.15_wM_RealmServer_Fix12)
+
+Universal Messaging registers a durable connection bean twice when JMX is enabled
+and writes an error in the nirvana.log file.
+The issue affects synchronous durable subscribers. The server returns the
+following error when a new durable connection bean is registered: "Durable
+Connection Bean with the same ID found while registering a new one, unregister
+the old one."
+The issue is resolved.
+
+NUM-20096 (NUM_10.15_wM_RealmServer_Fix12)
+
+The Universal Messaging server now logs additional diagnostic information when
+thread-pool monitoring reports purging for a JMS channel that is slow or stalled.
+The information includes the name of the channel for which the purge operation is executed,
+the duration of the last purge, and the time it takes the server to compile a list of individual 
+events eligible for purging.
+For clustered channels, the master realm also logs the last requested purgeable EID,
+the last lowest purgeable EID received by the slave realms, and the purge request-response time.
+
+NUM-20057 (NUM_10.15_wM_RealmServer_Fix12)
+
+When a Universal Messaging cluster is part of a zone, events that are already acknowledged and 
+consumed might accumulate on the channels of the zone.
+These zone channels have a last acknowledged EID of -1 on the clustered join, which causes the 
+backlog of events. In addition, zone channels that are deleted and then recreated can cause the 
+clustered join to be ahead of the channel's own last EID. In this situation, events can go missing 
+if further publishes are performed through the clustered join.
+The issue is resolved. The Universal Messaging server has been modified to correct for such issues. 
+In addition, the healthchecker tool of the Realm Information Collector has been enhanced to 
+identify joins that are ahead of the channel's last EID.
+
+NUM-20216 (NUM_10.15_wM_RealmServer_Fix11)
+
+A vulnerability was discovered in the third-party Xerces library used in Universal Messaging.
+The issue is resolved. The Xerces jar used in Universal Messaging has been upgraded to version 
+2.12.1 from versions 2.11 and 2.3.
+
+NUM-20146 (NUM_10.15_wM_RealmServer_Fix11)
+
+When the used by customer nodeJS AMQP (Rhea) client was closed- the associated AMQP processing tasks 
+were not closed appropriately. This caused high CPU usage caused by UM's server AMQP processing 
+threads. Similar high CPU usage was also possible on a idle, non-closed AMQP client connections.
+This issue is now resolved.
+
+NUM-20093 (NUM_10.15_wM_RealmServer_Fix11)
+
+After you import a durable from an XML file, publishing events to the durable might result in lost 
+events.
+The issue occurs because the start EID of the exported durable is greater than the last EID of the 
+associated channel.
+The issue is resolved. The Universal Messaging server now resets any durable start EIDs that are 
+greater than the channel's last EID to that last EID.
+In addition, the following changes have been made:
+- The API documentation for com.pcbsys.nirvana.client.nDurableAttributes#setStartEID
+has been updated to reflect the EID changes.
+- You can now import Named durables into a Universal Messaging server.
+Previously, com.pcbsys.nirvana.client.nDurableAttributes.nDurableType.Named objects could not be 
+imported into a Universal Messaging server because a non-null selector was set during export. To 
+resolve this issue, selectors are now ignored for Named durables during import because Named 
+durables do not support selectors at creation time. For more information, see 
+com.pcbsys.nirvana.client.nDurableAttributes#setSelector.
+
+NUM-20077 (NUM_10.15_wM_RealmServer_Fix11)
+
+When the error occurs while parsing the jaas config file during authentication, no error was logged 
+until the log level is changed to warning. 
+With this fix, such error gets logged in nirvana.log file with default log level (error).
+
+NUM-19991 (NUM_10.15_wM_RealmServer_Fix11)
+
+A vulnerability was discovered in the third-party org.json library used in Universal Messaging.
+The issue is resolved. The org.json jar used in Universal Messaging has been upgraded to version 
+20230227 from version 20160810.
+
+NUM-19986 (NUM_10.15_wM_RealmServer_Fix11)
+
+The Universal Messaging server and Java client now log additional diagnostic information when thread 
+pool monitoring reports a slow or stalled task.
+Additional information is logged for slow or stalled tasks in the following cases:
+- A slow or stalled channel listener task in the Java client. The thread pool monitoring logs the 
+channel name and the size of the incoming event queue.
+- A slow connection accept task in the server. The thread pool monitoring logs the connection 
+details (IP address and port), the type of the client, and connection statistics for the respective 
+network interface.
+- A slow connection read task in the server. The thread pool monitoring logs the connection details 
+(IP address and port), and also minimum, maximum, and current response times for the connection.
+
+NUM-18060 (NUM_10.15_wM_RealmServer_Fix11)
+
+When you use the nInstanceManager tool to create a Universal Messaging realm instance, the instance 
+gets created, but the tool returns warning messages.
+The nInstanceManager tool returns the following messages:
+- WARNING: An illegal reflective access operation has occurred
+- WARNING: Illegal reflective access by com.sun.xml.bind.v2.runtime.reflect.opt.Injector
+(file:/opt/softwareag/1011/UniversalMessaging/lib/jaxb-impl-2.3.0.jar) to method
+java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int).
+The issue is now resolved.
+
 NUM-20155 (NUM_10.15_wM_RealmServer_Fix10)
 
 Before this solution, when the header-fields count exceeded count 30 resulted in 
 ArrayIndexOutOfBoundException.
 With this fix, now can process as many header-fields as needed, until it does not cross the 
 max-header-buffer-size set.
+
+NUM-20084 (NUM_10.15_wM_RealmServer_Fix10)
+
+The jmx_exporter.yaml configuration file, which was deprecated in
+Universal Messaging 10.11, has been removed.
+Instead, to configure JMX with Universal Messaging, use the replacement file,
+jmx_sag_um_exporter.yaml.
+For more information about using JMX, see the Universal Messaging documentation.
 
 NUM-20047 (NUM_10.15_wM_RealmServer_Fix10)
 
@@ -103,6 +278,9 @@ A Universal Messaging server instance fails to start when the JMX Exporter agent
 AIX operating system. The issue occurs because some special characters in the 
 jmx_sag_um_exporter.yaml file cause encoding issues.
 The issue is resolved. 
+Note: These changes are only applicable to newly created instance (after applying the fix). For the 
+existing instance, one should manually replace the jmx_sag_um_exporter.yaml in the server's bin 
+directory with the one from server's templates directory.
 
 NUM-19915 (NUM_10.15_wM_RealmServer_Fix10)
 
@@ -125,6 +303,22 @@ the Connection Monitor to ensure that there are not too many connections being a
 same time.
 This enforces the limit based on the host from which the connections are coming and not based on the 
 total of connections.
+
+NUM-19887 (NUM_10.15_wM_RealmServer_Fix10)
+
+Using JMX, you can monitor only one Universal Messaging HTTP-SocketAccept or
+HTTP-SSLSocketAccept thread pool at a time and you cannot identify which thread
+pool you are monitoring.
+Out of many existing HTTP-SocketAccept or HTTP-SSLSocketAccept thread pools,
+you can monitor only one at a time using JMX and it is not clear which one it is.
+The JMX monitoring tool just displays the generic name HTTP-SocketAccept.
+The issue happens because the socket accept thread pool name does not include
+the name of the corresponding Universal Messaging interface and the JMX server
+cannot identify the different thread pools.
+The issue is resolved. Now each HTTP-SocketAccept or HTTP-SSLSocketAccept thread
+pool name includes the name of the corresponding interface, for example,
+HTTP-SocketAccept-nhp1, and all thread pools are visible and identifiable in your
+JMX monitoring tool.
 
 NUM-17831 (NUM_10.15_wM_RealmServer_Fix10)
 
@@ -283,31 +477,6 @@ NUM-18982 (NUM_10.15_wM_RealmServer_Fix4)
 
 Fixed a rare deadlock caused by an abnormal close in the Javascript websocket driver. A side effect 
 of this deadlock is that a UM server may shutdown and automatically restart.
-
-NUM-18564 (NUM_10.15_wM_RealmServer_Fix4)
-
-A Universal Messaging client might take a long time to detect a connection failure.
-The issue is resolved. Universal Messaging keep alive performance has been optimized for improved 
-detection of broken socket connections.
-For all nSession clients, each client will now check for the reception of a server-side keep alive. 
-Note that you configure server-side keep alive intervals by setting the "KeepAlive" realm 
-configuration property under "Connection Config" in Enterprise Manager. If this keep alive is not 
-received on time, the session is closed, and a reconnection attempt is made. Also note that 
-reconnections can be disabled at an API level.
-In addition, you can use a new Java system property, com.softwareag.um.client.missed_keep_alives=<n> 
-to set the number of missed server-side keep alives before a connection is closed.
-Java system property reference
-com.softwareag.um.client.missed_keep_alives=<n>
-Specifies the number of missed server-side keep alives before a connection is closed. The default 
-value is 1. A value of 1 means that if a single keep alive is missed by the client, the session is 
-closed. 
-To disable server-side keep alive checking, set the Java property to 0 (zero).
-Note that the Java property is consulted only once upon JVM startup.
-For more information, see the Universal Messaging Java API documentation on:
-com.pcbsys.nirvana.client.nConstants#setPermittedKeepAlivesMissed
-com.pcbsys.nirvana.client.nConstants.MISSED_KEEP_ALIVES
-For more information about the "KeepAlive" realm configuration property, see the Universal Messaging 
-Administration Guide.
 
 NUM-18372 (NUM_10.15_wM_RealmServer_Fix4)
 
