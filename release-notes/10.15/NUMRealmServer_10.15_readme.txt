@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 12 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 13 Readme
                
-                                  September 2023
+                                  November 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-12 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+13 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 12
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 13
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix12
+NUM_10.15_wM_RealmServer_Fix13
 
 
 
@@ -72,6 +72,26 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-20777 (NUM_10.15_wM_RealmServer_Fix13)
+
+The 'sag_um_connections_per_user' and 'sag_um_server_memory_direct_free_bytes' metrics that 
+Universal Messaging provides for monitoring are not visible in graphic tools that visualize data 
+collected by Prometheus.
+The issue happens because the two metrics are not properly exposed in the jmx_sag_um_exporter.yaml 
+file.
+The issue is resolved.
+
+NUM-20677 (NUM_10.15_wM_RealmServer_Fix13)
+
+Universal Messaging now supports plugins for all UM license types regardless of the 'Plugins' key 
+value in the license file. 
+
+NUM-20618 (NUM_10.15_wM_RealmServer_Fix13)
+
+When working with Universal Messaging (UM) clusters in a cross-cluster environment that includes 
+different UM versions, a deadlock condition might occur.
+The issue is resolved.
 
 NUM-20614 (NUM_10.15_wM_RealmServer_Fix12)
 
