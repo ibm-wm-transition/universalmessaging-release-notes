@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    November 2022
+                    November 2023
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -33,6 +33,13 @@ This issue is now resolved.
 Running the Software AG command-line tools in the <SoftwareAG_directory>\common\bin directory
 in a Docker container fails due to an incorrect directory path in the scripts.
 The issue is resolved.
+
+[10.11.0.0] NUM-19088
+
+Several classpath configurations for Log4j2 were missing from the Server_Common.conf file in our 
+Universal Messaging Server docker images. As a result it was not possible to start containers with 
+Log4j2 logging enabled.
+The issue is now resolved.
 
 [10.11.0.0] NUM-16132
 
