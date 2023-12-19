@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 13 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 14 Readme
                
-                                  November 2023
+                                  December 2023
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-13 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+14 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 13
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 14
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix13
+NUM_10.15_wM_RealmServer_Fix14
 
 
 
@@ -72,6 +72,87 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-20994 (NUM_10.15_wM_RealmServer_Fix14)
+
+When you close all consumers that are subscribed to a durable, the server logs a 
+NullPointerException.
+The issue is resolved.
+
+NUM-20988 (NUM_10.15_wM_RealmServer_Fix14)
+
+For optimized performance, Universal Messaging caches the rules for all server-statistics Prometheus 
+metrics in the jmx_sag_um_exporter.yaml configuration file of the JMX Exporter agent.
+Caching of the rules is enabled by default for the following metrics in the jmx_sag_um_exporter.yaml 
+file:
+- sag_um_server_memory_heap_usage_bytes
+- sag_um_server_memory_heap_free_bytes
+- sag_um_server_memory_heap_max_bytes
+- sag_um_server_memory_direct_max_bytes
+- sag_um_server_memory_direct_usage_bytes
+- sag_um_server_memory_direct_free_bytes
+- sag_um_server_disk_total_bytes
+- sag_um_server_disk_usage_bytes
+- sag_um_server_disk_free_bytes
+- sag_um_server_cpu_usage_ratio
+- sag_um_server_currentconnections_total
+- sag_um_server_bytesin_bytes
+- sag_um_server_bytesout_bytes
+- sag_um_server_publishedevents_total
+- sag_um_server_consumedevents_total
+You can disable rule caching for a metric by setting the 'cache' label of the metric to 'false' in 
+the jmx_sag_um_exporter.yaml file.
+
+NUM-20935 (NUM_10.15_wM_RealmServer_Fix14)
+
+A vulnerability was discovered in the third-party org.json library used in Universal Messaging 
+[version 20230227].
+This issue is resolved by upgrading org.json jar used in Universal Messaging from version 20230227 
+to version 20231013.
+
+NUM-20890 (NUM_10.15_wM_RealmServer_Fix14)
+
+AMQP keep alives from a UM server may cause a decode-error during transport, or the idle timeout 
+threshold may be missed due to improper keep alive processing on a UM server, causing an AMQP 
+client to disconnect and close.
+This issue is now resolved. AMQP clients should now remain connected unless gracefully shutdown, or 
+the idle timeout threshold (if applicable) is exceeded after proper keep alive processing.
+
+NUM-20871 (NUM_10.15_wM_RealmServer_Fix14)
+
+Out of memory could occur in rare cases because the Finalizer thread could be locked out by the UM 
+channel purge mechanism. This issue is now resolved. 
+
+NUM-20767 (NUM_10.15_wM_RealmServer_Fix14)
+
+AMQP framing/decode errors are possible on the client side due to a possible race condition in the 
+QPID Proton J library.
+To resolve these errors, the server must synchronize access to a 
+org.apache.qpid.proton.engine.Transport for all instances where frames could be written.
+
+NUM-20251 (NUM_10.15_wM_RealmServer_Fix14)
+
+In Universal Messaging, you can create duplicate stores (channels or queues) for a particular store 
+name, which might result in duplicate or lost events.
+The store names contain the same sequence of letters but have different cases for the characters, 
+for example, testQueue and TestQueue.
+The issue is resolved.
+Important: After you apply this fix, the Universal Messaging server will not start if there are 
+duplicate stores for a particular store name present on the server when you work with 
+case-insensitive data folders, for example, on a Windows operating system. Contact Software AG 
+Global Support on how to proceed.
+When you start the Universal Messaging server, it checks for duplicate stores and shuts down if it 
+finds any such stores. The server also writes the following warning message in the nirvana.log file 
+and in the console output: ?WARNING: Multiple stores found for store name: <Store name>. Listing 
+the stores for this store name: <Store 1><Store 2>??
+In addition, with this fix, you can no longer create duplicate stores when you work with a 
+case-insensitive data folder. If you create a store for a store name that conflicts with an 
+existing name on the server, Universal Messaging displays the following message: ?There is a 
+conflict in the given store name.
+
+NUM-17141 (NUM_10.15_wM_RealmServer_Fix14)
+
+Improved performance of durables and queue consumers
 
 NUM-20777 (NUM_10.15_wM_RealmServer_Fix13)
 
