@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 17 Readme
+                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 18 Readme
                
-                                  November 2023
+                                  January 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-17 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+18 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 17 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 18 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix17
+NUM_10.11_wM_RealmServer_Fix18
 
 
 
@@ -72,6 +72,37 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-21283 (NUM_10.11_wM_RealmServer_Fix18)
+
+ RIC is unable to connect to the realm server using SSL (NHPS and NSPS) protocols. If UM realm 
+server has only secure interfaces, RIC collectors requiring a session to the server would not work. 
+The issue is resolved.
+
+NUM-21179 (NUM_10.11_wM_RealmServer_Fix18)
+
+UM previously supported only filters like: 'document.field = stringField',
+but did not support filters like 'stringField=document.field', i.e. where RHS expression of filter 
+contains document nested fields.
+Now it is fixed and nested fields can be used in right hand side of  filter expression (for now 
+except boolean fields values).
+
+NUM-21033 (NUM_10.11_wM_RealmServer_Fix18)
+
+When updating protobuf descriptor for the channel and then cluster (all servers) is fully restarted 
+the channel missed the new updated protobuf descriptor. 
+Now it should be fixed.
+
+NUM-20993 (NUM_10.11_wM_RealmServer_Fix18)
+
+Fix the Null pointer exception on consumer close in certain conditions.
+
+NUM-20936 (NUM_10.11_wM_RealmServer_Fix18)
+
+A vulnerability was discovered in the third-party org.json library used in Universal Messaging 
+[version 20230227].
+This issue is resolved by upgrading org.json jar used in Universal Messaging from version 20230227 
+to version 20231013.
 
 NUM-20830 (NUM_10.11_wM_RealmServer_Fix17)
 
@@ -902,7 +933,7 @@ messages and these messages will appear in English.
 
 11.0 Copyright
 
-Copyright (c) 2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
+Copyright (c) 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
 Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their 
 licensors.
 
