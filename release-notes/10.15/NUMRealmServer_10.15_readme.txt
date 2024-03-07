@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 14 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 16 Readme
                
-                                  December 2023
+                                  March 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-14 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+16 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 14
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 16
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix14
+NUM_10.15_wM_RealmServer_Fix16
 
 
 
@@ -72,6 +72,103 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-21421 (NUM_10.15_wM_RealmServer_Fix16)
+
+Channel iterator could flood the server logs with the messages "Durable Connection Bean with same ID 
+found while registering a new one, unregister the old one. Conn ID: <connID>" when trying to 
+receive event.
+Now it is fixed.
+
+NUM-21248 (NUM_10.15_wM_RealmServer_Fix16)
+
+Fixed a race condition NPE in the fPipedOutputStream class.
+
+NUM-21116 (NUM_10.15_wM_RealmServer_Fix16)
+
+A Universal Messaging client might log a socket exception when using session multiplexing with NHP 
+and closing the last multiplex session for an NHP connection.
+This issue is now resolved.
+
+NUM-21110 (NUM_10.15_wM_RealmServer_Fix16)
+
+The Universal Messaging server might log an IllegalArgumentException when closing client connections
+that use an SSL network interface with NIO (Non-blocking Input/Output) enabled.
+The server does not ensure thread-safe access to the write buffer of SSL connections,
+which might cause IllegalArgumentExceptions when flushing outgoing data before closing an SSL 
+connection.
+This issue is now resolved.
+
+NUM-20898 (NUM_10.15_wM_RealmServer_Fix16)
+
+Universal Messaging server unconditionally waits 100 ms when closing a client connection.
+This issue is now resolved. Universal Messaging server only waits if there are any outbound events 
+pending to be sent over the connection.
+
+NUM-21180 (NUM_10.15_wM_RealmServer_Fix15)
+
+UM previously supported only filters like: 'document.field = stringField',
+but did not support filters like 'stringField=document.field', i.e. where RHS expression of filter 
+contains document nested fields.
+Now it is fixed and nested fields can be used in right hand side of  filter expression (for now 
+except boolean fields values).
+
+NUM-21111 (NUM_10.15_wM_RealmServer_Fix15)
+
+When a Universal Messaging client gets disconnected from the server, the server logs a message that 
+does not give a clear explanation why the issue occurs.
+The issue is resolved. Now the message in the server log points to the exact reason for 
+disconnecting the client in the following cases:
+- If the client requests the session to close, the server logs the following message: "Reason : 
+Client session requested clean session close"
+- If the client gets disconnected because of an exception, the log entry includes the exception 
+class name and the exception message (when available).
+
+NUM-21046 (NUM_10.15_wM_RealmServer_Fix15)
+
+The Universal Messaging server does not immediately dispose of connection driver objects of clients 
+connected to an NHP interface using the NSP protocol, when those clients get disconnected, which 
+might cause the JVM to crash with an OutOfMemory error.
+Universal Messaging has a safeguard mechanism that periodically checks for stale connections and 
+removes such connections from memory. The mechanism runs every 60 seconds by default. However, in 
+high-load environments, when clients reconnect frequently, stale connection objects might pile up 
+in memory before the mechanism gets triggered, which causes the JVM to crash with an OutOfMemory 
+error.
+This issue is resolved. Now the Universal Messaging server disposes of connection driver objects 
+immediately when clients are disconnected.
+
+NUM-21034 (NUM_10.15_wM_RealmServer_Fix15)
+
+When updating protobuf descriptor for the channel and then cluster (all servers) is fully restarted 
+the channel missed the new updated protobuf descriptor. 
+Now it should be fixed.
+
+NUM-20909 (NUM_10.15_wM_RealmServer_Fix15)
+
+Universal Messaging deletes local stores when clustering is disabled in the license file, but a 
+cluster configuration is already present on the server.
+After you create a Universal Messaging cluster under a license that allows clustering and then 
+update the license file to a license with disabled clustering, when you start the server, Universal 
+Messaging deletes all local stores. The issue occurs because the cluster configuration is still 
+present in the system.
+The issue is resolved. Now the Universal Messaging server checks for such conditions and writes a 
+warning in the nirvana.log file and in the console output. The server deletes local stores only 
+when clustering is enabled in the license file and a cluster configuration is present in the data 
+directory.
+
+NUM-20602 (NUM_10.15_wM_RealmServer_Fix15)
+
+Universal Messaging might not properly handle and report fatal errors during Input/Output (IO) 
+operations of the server.
+The issue is now resolved. Universal Messaging has been enhanced to log such errors in the 
+nirvana.log file and to shut down the server if such errors occur during IO operations.
+
+NUM-20557 (NUM_10.15_wM_RealmServer_Fix15)
+
+A java.util.ConcurrentModificationException in nClusterConnectionManager can appear in a UM server 
+log only when clustering is enabled and used.  This exception can occur due to dropped connections 
+from within a cluster.
+The issue is resolved by refactoring some cluster related code within the server.
 
 NUM-20994 (NUM_10.15_wM_RealmServer_Fix14)
 
@@ -760,7 +857,7 @@ messages and these messages will appear in English.
 
 11.0 Copyright
 
-Copyright (c) 2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
+Copyright (c) 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
 Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their 
 licensors.
 
