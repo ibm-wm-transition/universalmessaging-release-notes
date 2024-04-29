@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    January 2024
+                    April 2024
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -8,6 +8,17 @@ For additional information about SoftwareAG Universal Messaging Server, see the 
 https://documentation.softwareag.com/universal_messaging/num10-11/10-11_UM_webhelp/index.html
 
 
+
+[10.11.0.17] NUM-20916
+
+Using the “nstopserver” command in a Docker environment might result in a Universal Messaging server 
+not shutting down gracefully and returning errors upon restart.
+The issue might happen in cases when there are many channels and queues, and the server did not have 
+enough time to complete all the processes when stopping.
+The issue is resolved. You can use the “nserverdaemon stop” command on UNIX instead of “nstopserver” 
+to stop the server gracefully.
+For more information about stopping the server and its behavior during shutdown, see the Universal 
+Messaging documentation.
 
 [10.11.0.8] NUM-18664
 
