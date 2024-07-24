@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    April 2024
+                    July 2024
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
