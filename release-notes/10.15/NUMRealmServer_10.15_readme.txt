@@ -1,6 +1,6 @@
                   Universal Messaging webMethods RealmServer 10.15 SP0 Fix 20 Readme
                
-                                  July 2024
+                                  August 2024
 
 ________________________________________________________________________________
 
@@ -64,15 +64,6 @@ Consider the following important information:
 are patched together with the realm server binaries, and that both are kept
 up to date with the latest Universal Messaging official fix set.
 
-- The following configuration properties are added to the Server_Common.conf file
-of a Universal Messaging server as part of NUM-22840 that introduces support for Java 17:
-wrapper.java.additional.300=--add-opens=java.base/java.nio=ALL-UNNAMED
-wrapper.java.additional.301=--add-opens=java.base/sun.nio.ch=ALL-UNNAMED
-
-Ensure that the indexes (300, 301) of the new properties do not match any
-custom configuration you might have in the Server_Common.conf and Custom_Server_Common.conf
-files of your existing Universal Messaging installation. In case of identical indexes, 
-the newly introduced properties will override your custom configuration.
 
 
 7.0 Fix Contents
@@ -93,11 +84,23 @@ The issue occurs because during recovery a large window of large events, 100 or 
 loaded into the heap.
 This issue is now resolved.
 
+NUM-21543 (NUM_10.15_wM_RealmServer_Fix20)
+
+Updated bouncycastle libraries to 1.78.1 to address security vulnerabilities.
+
 NUM-21496 (NUM_10.15_wM_RealmServer_Fix20)
 
 When you delete a reliable queue, Universal Messaging does not remove the empty folder associated 
 with the queue, which might slow down performance if many folders accumulate.
 The issue is resolved.
+
+NUM-23127 (NUM_10.15_wM_RealmServer_Fix20)
+
+Universal Messaging no longer provides a separate tools container image on the Software AG Container 
+Repository. 
+As an alternative, you can run a Universal Messaging server container in serverless mode by passing 
+TOOLS_ONLY=true environment variable when starting a container. Containers started in this way can 
+only be used to run the included administrative tools to manage other containers.
 
 NUM-22840 (NUM_10.15_wM_RealmServer_Fix19)
 
