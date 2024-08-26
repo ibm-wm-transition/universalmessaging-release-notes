@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 20 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 21 Readme
                
                                   August 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-20 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+21 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 20
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 21
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix20
+NUM_10.15_wM_RealmServer_Fix21
 
 
 
@@ -75,6 +75,27 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-23134 (NUM_10.15_wM_RealmServer_Fix21)
+
+When UM server or client is trying to do reverse lookup for the client ip, more logs are added at 
+the appropriate log levels, to indicate whether the DNS lookup consumes more time than expected. 
+This will provide more information in identifying issues with client-server connectivity.
+
+NUM-23081 (NUM_10.15_wM_RealmServer_Fix21)
+
+The following JVM options introduced in Universal Messaging 10.15 Fix 19 to support Java 17 as a 
+runtime are removed from the Server_Common.conf file because they are unnecessary:
+-wrapper.java.additional.300=--add-opens=java.base/java.nio=ALL-UNNAMED
+-wrapper.java.additional.301=--add-opens=java.base/sun.nio.ch=ALL-UNNAMED 
+However, the Universal Messaging server and Java client applications using the admin or client API 
+still need these options in the following cases:
+- To use the Universal Messaging server 10.15 with Java 17 after you migrate from an older Universal 
+Messaging version that had stores of type Paged. You must add the two options to the 
+Server_Common.conf or Custom_Server_Common.conf file as additional parameters.
+- To use shared memory with Java 17. You must add the two options to the Server_Common.conf or 
+Custom_Server_Common.conf file of the Universal Messaging server as additional parameters and to 
+the JVM that starts the Java client application.
 
 NUM-21758 (NUM_10.15_wM_RealmServer_Fix20)
 
