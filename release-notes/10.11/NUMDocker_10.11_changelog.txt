@@ -1,6 +1,6 @@
     SoftwareAG Universal Messaging Server Docker image Changelog
 
-                    April 2024
+                    September 2024
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
@@ -8,6 +8,14 @@ For additional information about SoftwareAG Universal Messaging Server, see the 
 https://documentation.softwareag.com/universal_messaging/num10-11/10-11_UM_webhelp/index.html
 
 
+
+[10.11.0.20] NUM-23165
+
+Universal Messaging no longer provides a separate tools container image on the Software AG Container 
+Repository. 
+As an alternative, you can run a Universal Messaging server container in serverless mode by passing 
+TOOLS_ONLY=true environment variable when starting a container. Containers started in this way can 
+only be used to run the included administrative tools to manage other containers.
 
 [10.11.0.17] NUM-20916
 

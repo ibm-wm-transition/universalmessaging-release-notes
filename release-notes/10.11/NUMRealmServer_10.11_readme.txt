@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 18 Readme
+                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 20 Readme
                
-                                  January 2024
+                                  September 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-18 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
+20 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 18 Build ***BUILD_NUMBER***
+Universal Messaging webMethods RealmServer 10.11 SP0 Fix 20 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix18
+NUM_10.11_wM_RealmServer_Fix20
 
 
 
@@ -72,6 +72,63 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-23023 (NUM_10.11_wM_RealmServer_Fix20)
+
+Establishing a client connection to a Universal Messaging server might fail.
+The issue happens because in rare cases stream corruption during handshaking might occur.
+This issue is now resolved.
+
+NUM-21745 (NUM_10.11_wM_RealmServer_Fix20)
+
+JavaScript clients might be unable to connect to a Universal Messaging server when thousands of 
+JavaScript clients try to connect to the server.
+In such conditions, the server might become overloaded and start dropping further connection 
+requests.
+This issue is now resolved.
+
+NUM-21544 (NUM_10.11_wM_RealmServer_Fix20)
+
+Updated bouncycastle libraries to 1.78.1 to address security vulnerabilities.
+
+NUM-23165 (NUM_10.11_wM_RealmServer_Fix20)
+
+Universal Messaging no longer provides a separate tools container image on the Software AG Container 
+Repository. 
+As an alternative, you can run a Universal Messaging server container in serverless mode by passing 
+TOOLS_ONLY=true environment variable when starting a container. Containers started in this way can 
+only be used to run the included administrative tools to manage other containers.
+
+NUM-21330 (NUM_10.11_wM_RealmServer_Fix19)
+
+The Universal Messaging server does not immediately dispose of connection driver objects of clients 
+connected to an NHP interface using the NSP protocol, when those clients get disconnected, which 
+might cause the JVM to crash with an OutOfMemory error.
+Universal Messaging has a safeguard mechanism that periodically checks for stale connections and 
+removes such connections from memory. The mechanism runs every 60 seconds by default. However, in 
+high-load environments, when clients reconnect frequently, stale connection objects might pile up 
+in memory before the mechanism gets triggered, which causes the JVM to crash with an OutOfMemory 
+error.
+This issue is resolved. Now the Universal Messaging server disposes of connection driver objects 
+immediately when clients are disconnected.
+
+NUM-21105 (NUM_10.11_wM_RealmServer_Fix19)
+
+Out of memory could occur in rare cases because the Finalizer thread could be locked out by the UM 
+channel purge mechanism. This issue is now resolved. 
+
+NUM-20652 (NUM_10.11_wM_RealmServer_Fix19)
+
+A Universal Messaging queue synchronous reader waits additional 300 seconds to process an event 
+instead of two seconds. The issue is resolved.
+
+NUM-12619 (NUM_10.11_wM_RealmServer_Fix19)
+
+On the Windows platform JVM's do not support millisecond resolution when using the 
+java.util.concurrent.locks.LockSupport#parkNanos methods causing delays up to 15 milliseconds when 
+expecting only 1 millisecond. A solution has been implemented that overcomes this issue by enabling 
+1 millisecond clock resolution with the use of java.lang.Thread#sleep(long) on a thread for the 
+life of the JVM.
 
 NUM-21283 (NUM_10.11_wM_RealmServer_Fix18)
 
@@ -150,6 +207,17 @@ Universal Messaging might still have high-CPU usage issues when using the AMQP p
 AMQP performance optimizations introduced in NUM-17343.
 The issue affects Universal Messaging versions 10.11 and 10.15.
 The issue is resolved.
+
+NUM-20916 (NUM_10.11_wM_RealmServer_Fix17)
+
+Using the ?nstopserver? command in a Docker environment might result in a Universal Messaging server 
+not shutting down gracefully and returning errors upon restart.
+The issue might happen in cases when there are many channels and queues, and the server did not have 
+enough time to complete all the processes when stopping.
+The issue is resolved. You can use the ?nserverdaemon stop? command on UNIX instead of ?nstopserver? 
+to stop the server gracefully.
+For more information about stopping the server and its behavior during shutdown, see the Universal 
+Messaging documentation.
 
 NUM-20364 (NUM_10.11_wM_RealmServer_Fix16)
 
