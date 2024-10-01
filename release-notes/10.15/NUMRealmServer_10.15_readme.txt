@@ -1,11 +1,11 @@
-                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 21 Readme
+                  Universal Messaging webMethods RealmServer 10.15 SP0 Fix 22 Readme
                
-                                  September 2024
+                                  October 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying Universal Messaging RealmServer 10.15 SP0 Fix 
-21 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
+22 to Universal Messaging 10.15 SP0 installations. For additional information about Universal 
 Messaging, see the index.html file in the docs directory of your installation. 
 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.15 SP0 Fix 21
+Universal Messaging webMethods RealmServer 10.15 SP0 Fix 22
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix21
+NUM_10.15_wM_RealmServer_Fix22
 
 
 
@@ -75,6 +75,17 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-23328 (NUM_10.15_wM_RealmServer_Fix22)
+
+A Universal Messaging server now performs a complete shutdown after waiting for a default graceful 
+shutdown period of 40 seconds. Previously the graceful shutdown period was 10 seconds.
+You can also use a new server parameter, "com.softwareag.um.server.ServerShutdownTimeOut?, to 
+configure the time in seconds for a graceful shutdown after which the server shuts down forcefully. 
+Valid values are between 10 seconds and 3600 seconds. The default value is 40 seconds. If you 
+specify values that are below or above the valid range, Universal Messaging adjusts these values to 
+the minimum value of 10 or the maximum value of 3600, respectively.
+In addition, the shutdown period of servers in a cluster has been improved.
 
 NUM-23081 (NUM_10.15_wM_RealmServer_Fix21)
 
@@ -145,6 +156,15 @@ NUM-21734 (NUM_10.15_wM_RealmServer_Fix18)
 A Universal Messaging server fails to start with a NullPointerException when there are empty indexed 
 durables.
 The issue is resolved.
+
+NUM-21464 (NUM_10.15_wM_RealmServer_Fix18)
+
+The following issues can occur in Universal Messaging when you use durable subscribers with filters:
+- Connection to Universal Messaging is lost with the error ?java.util.NoSuchElementException: 
+Reached end of iterator? in the nirvana.log file.
+- Intermittent connectivity issues between cluster nodes.
+- Consumers might not be able to consume events from durables.
+The issues are resolved.
 
 NUM-21411 (NUM_10.15_wM_RealmServer_Fix18)
 
