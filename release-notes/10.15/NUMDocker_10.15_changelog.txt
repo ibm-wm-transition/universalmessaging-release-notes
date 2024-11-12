@@ -1,10 +1,10 @@
-    SoftwareAG Universal Messaging Server Docker image Changelog
+    IBM webMethods Universal Messaging Server Docker image Changelog
 
-                    October 2024
+                    November 2024
 
 ________________________________________________________________________________
-This file provides list of changes made to the Docker images of SoftwareAG Universal Messaging Server. 
-For additional information about SoftwareAG Universal Messaging Server, see the online documentation at
+This file provides list of changes made to the Docker images of IBM webMethods Universal Messaging Server.
+For additional information about IBM webMethods Universal Messaging Server, see the online documentation at
 https://documentation.softwareag.com/universal_messaging/num10-15/10-15_UM_webhelp/index.html
 
 
