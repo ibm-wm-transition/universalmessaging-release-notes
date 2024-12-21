@@ -1,11 +1,11 @@
-           IBM webMethods Universal Messaging webMethods RealmServer 10.15 SP0 Fix 23 Readme
+           IBM webMethods Universal Messaging webMethods RealmServer 10.15 SP0 Fix 24 Readme
        
-                                  November 2024
+                                  December 2024
 
 ________________________________________________________________________________
 
 This file provides important information for applying IBM webMethods Universal Messaging RealmServer 
-10.15 SP0 Fix 23 to IBM webMethods Universal Messaging 10.15 SP0 installations. For additional 
+10.15 SP0 Fix 24 to IBM webMethods Universal Messaging 10.15 SP0 installations. For additional 
 information about IBM webMethods Universal Messaging, see the index.html file in the docs directory 
 of your installation. 
 
@@ -28,13 +28,13 @@ Contents:
 
 1.0 Fix Name
 
-IBM webMethods Universal Messaging webMethods RealmServer 10.15 SP0 Fix 23
+IBM webMethods Universal Messaging webMethods RealmServer 10.15 SP0 Fix 24
 
 
 
 2.0 Fix ID
 
-NUM_10.15_wM_RealmServer_Fix23
+NUM_10.15_wM_RealmServer_Fix24
 
 
 
@@ -76,6 +76,63 @@ Review the fix contents carefully before applying the fix.
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
 
+NUM-23707 (NUM_10.15_wM_RealmServer_Fix24)
+
+The display names of the fix packages that deliver updates to the Java Service Wrapper for Linux, 
+AIX, and macOS operating systems have been changed to better indicate their purpose.
+
+NUM-23644 (NUM_10.15_wM_RealmServer_Fix24)
+
+Snooping on the outstanding events on a durable using Command Central, the Universal Messaging 
+Enterprise Manager, or the Universal Messaging client API might lead to stalled tasks on a 
+Universal Messaging server.
+This can have undesired consequences such as, for example, a split-brain cluster state, that is, the 
+existence of more than one master node in the cluster.
+The issue is resolved.
+
+NUM-23629 (NUM_10.15_wM_RealmServer_Fix24)
+
+When monitoring Universal Messaging, the Prometheus JMX Exporter agent removes the suffix "total" 
+from the names of rules of type ?gauge? and the suffix "info" from the names of rules of any type.
+The issue is resolved. The affected rules are renamed to match the output of the Prometheus JMX 
+Exporter.
+
+NUM-23600 (NUM_10.15_wM_RealmServer_Fix24)
+
+In Universal Messaging, exceeding the warning threshold configured for direct and heap memory might 
+result in degraded JVM performance.
+The issue is resolved.
+
+NUM-23531 (NUM_10.15_wM_RealmServer_Fix24)
+
+JavaScript clients might be unable to connect to a Universal Messaging server when thousands of 
+JavaScript clients try to connect to the server.
+In such conditions, the server might become overloaded and start dropping further connection 
+requests.
+This issue is now resolved.
+
+NUM-23507 (NUM_10.15_wM_RealmServer_Fix24)
+
+Establishing a client connection to a Universal Messaging server might fail.
+The issue happens because in rare cases stream corruption during handshaking might occur.
+This issue is now resolved.
+
+NUM-23466 (NUM_10.15_wM_RealmServer_Fix24)
+
+Universal Messaging uses the Protobuf library version 3.21.12, which has a security vulnerability.
+The issue is resolved. The Protobuf library has been updated to version 3.25.5.
+
+NUM-23342 (NUM_10.15_wM_RealmServer_Fix24)
+
+The Universal Messaging server does not update its garbage collection (GC) state.
+The issue is resolved.
+
+NUM-22900 (NUM_10.15_wM_RealmServer_Fix24)
+
+An ack/rollback request for an indexed durable on a slave node may timeout and cause the slave to be 
+disconnected from a cluster if the corresponding channel or durable is deleted.
+This issue is now resolved.
+
 NUM-23500 (NUM_10.15_wM_RealmServer_Fix23)
 
 NUM-23500
@@ -102,7 +159,8 @@ The issue is resolved.
 
 NUM-23343 (NUM_10.15_wM_RealmServer_Fix23)
 
-Prometheus JMX exporter is updated to version 1.0.1
+The Prometheus JMX exporter has been upgraded to version 1.0.1, which provides better scraping 
+performance.
 
 NUM-23324 (NUM_10.15_wM_RealmServer_Fix23)
 
@@ -475,9 +533,10 @@ execute the AutoUpdate task. The rescheduling is allowed in the span of 30 secon
 
 NUM-20613 (NUM_10.15_wM_RealmServer_Fix12)
 
-Universal Messaging (UM) now uses the Java Service Wrapper version 3.5.53 on all operating systems. 
-A script will modify and switch any existing UM server instances running on Linux, AIX, and OSX to 
-the Java Service Wrapper version 3.5.53.
+Universal Messaging now uses the Java Service Wrapper version 3.5.53 on Linux, AIX, and macOS 
+operating systems.
+A script will modify and switch any existing Universal Messaging server instances running on Linux, 
+AIX, and macOS to the Java Service Wrapper version 3.5.53.
 
 NUM-20544 (NUM_10.15_wM_RealmServer_Fix12)
 

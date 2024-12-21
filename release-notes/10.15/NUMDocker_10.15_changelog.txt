@@ -1,6 +1,6 @@
     IBM webMethods Universal Messaging Server Docker image Changelog
 
-                    November 2024
+                    December 2024
 
 ________________________________________________________________________________
 This file provides list of changes made to the Docker images of IBM webMethods Universal Messaging Server.
