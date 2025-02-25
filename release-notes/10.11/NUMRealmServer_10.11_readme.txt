@@ -1,12 +1,13 @@
-                  Universal Messaging webMethods RealmServer 10.11 SP0 Fix 20 Readme
-               
-                                  September 2024
+           IBM webMethods Universal Messaging webMethods RealmServer 10.11 SP0 Fix 22 Readme
+       
+                                  February 2025
 
 ________________________________________________________________________________
 
-This file provides important information for applying Universal Messaging RealmServer 10.11 SP0 Fix 
-20 to Universal Messaging 10.11 SP0 installations. For additional information about Universal 
-Messaging, see the index.html file in the docs directory of your installation. 
+This file provides important information for applying IBM webMethods Universal Messaging RealmServer 
+10.11 SP0 Fix 22 to IBM webMethods Universal Messaging 10.11 SP0 installations. For additional 
+information about IBM webMethods Universal Messaging, see the index.html file in the docs directory 
+of your installation. 
 
 
 Contents:
@@ -28,19 +29,19 @@ Contents:
 
 1.0 Fix Name
 
-Universal Messaging webMethods RealmServer 10.11 SP0 Fix 20 Build ***BUILD_NUMBER***
+IBM webMethods Universal Messaging webMethods RealmServer 10.11 SP0 Fix 22 Build ***BUILD_NUMBER***
 
 
 
 2.0 Fix ID
 
-NUM_10.11_wM_RealmServer_Fix20
+NUM_10.11_wM_RealmServer_Fix22
 
 
 
 3.0 Product(s)/Component(s) Affected
 
-Universal Messaging webMethods RealmServer 10.11 SP0
+IBM webMethods Universal Messaging webMethods RealmServer 10.11 SP0
 
 
 
@@ -58,9 +59,9 @@ Same platforms as product release.
 
 6.0 Cautions and Warnings
 
-It is strongly advisable that the Universal Messaging client libraries
+It is strongly advisable that the IBM webMethods Universal Messaging client libraries
 are patched together with the realm server binaries, and that both are kept
-up to date with latest Universal Messaging official fix set.
+up to date with latest IBM webMethods Universal Messaging official fix set.
 
 
 7.0 Fix Contents
@@ -72,6 +73,87 @@ Review the fix contents carefully before applying the fix.
  	
 This fix is cumulative, which means that it is an aggregate of previous fixes 
 for the release.
+
+NUM-23991 (NUM_10.11_wM_RealmServer_Fix22)
+
+A potential event loss scenario is possible if a UM server has a remote join to another UM server or 
+cluster.
+This issue is now resolved after the application of this fix.
+
+NUM-23801 (NUM_10.11_wM_RealmServer_Fix22)
+
+When UM server or client is trying to do reverse lookup for the client ip, more logs are added at 
+the appropriate log levels, to indicate whether the DNS lookup consumes more time than expected. 
+This will provide more information in identifying issues with client-server connectivity.
+Also, the connection time threshold for logging the message as an error is reduced.
+
+NUM-23769 (NUM_10.11_wM_RealmServer_Fix22)
+
+The client side API com.pcbsys.nirvana.client.nSession#deleteRealm has been changed to ensure that 
+the realm name to be removed is first removed locally on the connected realm server before the 
+connected realm server name is removed remotely. This API is also used in the Enterprise Manager 
+whenever a realm server is first selected and the right mouse button context menu item "Remove A 
+Realm" is executed or performed.
+In addition, you can use a new realm configuration property, "RemoteJoinContextStatsInterval", to 
+log join statistics at a specified interval in milliseconds. You configure the property on the 
+Config tab for a realm in the Enterprise Manager, as part of the Join Config property group. A 
+value between 0 (default) and less than 5000 disables logging. The minimum logging interval is 
+5000.
+For more information about working with realm configuration properties, see the Universal Messaging 
+documentation.
+
+NUM-23719 (NUM_10.11_wM_RealmServer_Fix22)
+
+The Universal Messaging realm servers fail to join a Universal Messaging cluster with the following 
+error: "Remote connection failed security challenge". The Universal Messaging clients cannot 
+establish a connection to the realm servers or the connection is slow with the same error message.
+The issue occurs because of incorrect header values exchanged during the authentication.
+The issue is resolved. A new parameter with name com.softwareag.um.authentication.maxHeaderCount and 
+default value of 0 has been added to limit the number of headers exchanged. Do not change the 
+default value of the parameter as it is used when the server communicates with a client that uses 
+headers.
+
+NUM-23130 (NUM_10.11_wM_RealmServer_Fix22)
+
+NUM-23130 
+Prevent a loop cycle of nJoinFind attempts specifically for newly created channels.
+When a remote join between servers or clusters first attempts to connect to a destination from a 
+newly created channel, a loop cycle of nJoinFind attempts can occur when only 1 will suffice. This 
+cycle can also fill up the server log with repeated entries that take up a lot of disk space, thus 
+impacting the server's overall performance.  
+The fix for this issue will break the loop cycle and ensure that only 1 nJoinFind attempt occurs 
+after connecting successfully to the destination.
+
+NUM-22901 (NUM_10.11_wM_RealmServer_Fix22)
+
+An ack/rollback request for an indexed durable on a slave node may timeout and cause the slave to be 
+disconnected from a cluster if the corresponding channel or durable is deleted.
+This issue is now resolved.
+
+NUM-23709 (NUM_10.11_wM_RealmServer_Fix21)
+
+Snooping on the outstanding events on a durable using Command Central, the Universal Messaging 
+Enterprise Manager, or the Universal Messaging client API might lead to stalled tasks on a 
+Universal Messaging server.
+This can have undesired consequences such as, for example, a split-brain cluster state, that is, the 
+existence of more than one master node in the cluster.
+The issue is resolved.
+
+NUM-23627 (NUM_10.11_wM_RealmServer_Fix21)
+
+The log level for the specific message Flow Control enabled for Connection with ID has been changed 
+from warn to debug to reduce the amount of non-critical log entries in the nirvana.log file. This 
+adjustment helps clean up the logs, making them easier to read and understand, while still 
+providing detailed Flow Control information at the debug level when needed for troubleshooting.
+
+NUM-23559 (NUM_10.11_wM_RealmServer_Fix21)
+
+Snooping on the outstanding events on a durable using Command Central, the Universal Messaging 
+Enterprise Manager, or the Universal Messaging client API might lead to stalled tasks on a 
+Universal Messaging server.
+This can have undesired consequences such as, for example, a split-brain cluster state, that is, the 
+existence of more than one master node in the cluster.
+The issue is resolved.
 
 NUM-23023 (NUM_10.11_wM_RealmServer_Fix20)
 
@@ -969,7 +1051,7 @@ or Enterprise Manager which are using client libraries.
 If you are uninstalling a Universal Messaging Enterprise Manager 
 fix, you do not need to shut down the Universal Messaging server.
 
-Uninstall using the Software AG Update Manager or 
+Uninstall using the IBM webMethods Update Manager or 
 Command Central (9.5 or later). For instructions, see the 
 corresponding documentation 
 at http://documentation.softwareag.com.
@@ -983,7 +1065,7 @@ apply these instructions to the previously installed fix.
 
 10.0 Globalization
 
-This fix conforms to the internationalization standards of the webMethods 
+This fix conforms to the internationalization standards of the IBM webMethods 
 product suite and includes support for operation in any country, locale, or 
 language as specified in the Installing webMethods Products guide. It was not 
 tested with non-English configurations and non-ASCII data. However, this fix has
@@ -1001,46 +1083,4 @@ messages and these messages will appear in English.
 
 11.0 Copyright
 
-Copyright (c) 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., 
-Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their 
-licensors.
-
-The name Software AG and all Software AG product names are either trademarks or 
-registered trademarks of Software AG and/or Software AG USA Inc. and/or its 
-subsidiaries and/or its affiliates and/or their licensors. Other company and 
-product names mentioned herein may be trademarks of their respective owners.
-
-Detailed information on trademarks and patents owned by Software AG and/or its 
-subsidiaries is located at http://softwareag.com/licenses.
-
-This software may include portions of third-party products. For third-party 
-copyright notices, license terms, additional rights or restrictions, please 
-refer to "License Texts, Copyright Notices and Disclaimers of Third Party 
-Products". For certain specific third-party license restrictions, please refer 
-to section E of the Legal Notices available under "License Terms and Conditions 
-for Use of Software AG Products / Copyright and Trademark Notices of Software AG
-Products". These documents are part of the product documentation, located at 
-http://softwareag.com/licenses and/or in the root installation directory of the 
-licensed product(s).
-
-
-
-12.0 Contacting Us
-
-Authorized technical support contacts can reach Software AG Global Support in
-the following ways:
-
-  Web: https://empower.softwareag.com (online support center)
-  
-  E-mail: empower@softwareag.com
-  
-You can find complete contact information in our Global Support Contact 
-Directory at:
-
-https://empower.softwareag.com/public_directory.asp
-
-You can also visit our Software AG Developer Communities to access additional 
-articles, demos, and tutorials, technical information, samples, useful resources,
-online discussion forums moderated by Software AG professionals, and more at:
-
-http://communities.softwareag.com/ecosystem/communities/public/index.html
+Super iPaas Integration LLC, an IBM Company 2024.
